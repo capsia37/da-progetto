@@ -1,0 +1,143 @@
+---
+title: "Progetto DA"
+format: pdf
+editor: visual
+date: "`r Sys.Date()`"
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(yaml)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Progetto di Data Analytics
+
+## Importazione dei dati
+
+```{r}
+Pollution = read.csv("Pollution/pollution.csv")
+```
+
+## ANALISI DEL DATASET "Pollution"
+
+```{r}
+PollutionUnivConf <- read_yaml("pollution-univ.config.yaml")
+```
+
+```{r, results='asis'}
+univarAnalysis <- function(conf, df) {
+  cat("\n\n\\clearpage\n\\newpage")
+  cat("\n\n##", conf$colname, "\n")
+  if ("uselog" %in% conf$run) {
+    df[, conf$colname] <- log(df[, conf$colname])
+  }
+  cat("\n\n Numero di NA: ", sum(is.na(df[, conf$colname]), na.rm = T), "\n\n")
+  if ("filterzeros" %in% conf$run) {
+    cat("\n\n Numero di zeri rimossi: ", sum(df[, conf$colname] == 0, na.rm = T), "\n\n")
+    df <- df[df[, conf$colname] != 0,]
+  }
+  if (sum(
+      as.logical("dobarplot" %in% conf$run), 
+      as.logical("doboxplot" %in% conf$run),
+      as.logical("dohist" %in% conf$run),
+      as.logical("dodensity" %in% conf$run),
+      as.logical("doqqplot" %in% conf$run)
+    ) > 2) {
+    par(mfrow = c(2, 2))
+  } else {
+    par(mfrow = c(1, 1))
+  }
+  if ("dotable" %in% conf$run) {
+    print(kable(t(rbind(
+      idx = levels(factor(df[, conf$colname])),
+      abs = table(df[, conf$colname]),
+      rel = prop.table(table(df[, conf$colname]))
+    )), col.names = c("Level", "Abs. Freq", "Rel. Freq"), row.names = FALSE))
+  } else {
+    print(kable(as.array(summary(df[, conf$colname])), col.names = c("Stat", "Value")))
+  }
+  if ("dobarplot" %in% conf$run) {  
+    barplot(table(df[, conf$colname]), main=NULL)
+  }
+  if ("doboxplot" %in% conf$run) {
+    boxplot(df[, conf$colname], main=NULL)
+  }
+  if ("dohist" %in% conf$run) {
+    hist(df[, conf$colname], freq = F, main=NULL, xlab = NULL)
+  }
+  if ("dodensity" %in% conf$run) {
+    plot(density(df[, conf$colname], na.rm = T), main="")
+  }
+  if ("doqqplot" %in% conf$run) {
+    qqnorm(df[, conf$colname])
+    qqline(df[, conf$colname])
+  }
+  if (!is.na(conf$desc)) {
+    cat("\n\n", conf$desc, "\n")
+  }
+}
+
+out <- sapply(PollutionUnivConf$variables, univarAnalysis, df = Pollution)
+```
+
+## ANALISI BIVARIATA DEL DATASET "House prices"
+
+```{r}
+PollutionBivConf <- read_yaml("pollution-biv.config.yaml")
+```
+
+```{r, results='asis'}
+bivarAnalysis <- function(conf, df) {
+  cat("\\newpage")
+  cat("\n\n##", conf$colname, "\n")
+  if ("uselog" %in% conf$run) {
+    df[, conf$colname] <- log(df[, conf$colname])
+  }
+  cat("\n\n Numero di NA: ", sum(is.na(df[, conf$colname]), na.rm = T), "\n\n")
+  if ("filterzeros" %in% conf$run) {
+    cat("\n\n Numero di zeri rimossi: ", sum(df[, conf$colname] == 0, na.rm = T), "\n\n")
+    df <- df[df[, conf$colname] != 0,]
+  }
+  if ("docmpboxplot" %in% conf$run) {
+    boxplot(log(df[, conf$tgcol])~df[, conf$colname], 
+            xlab = conf$colname, ylab = conf$tgcol)
+  }
+  if ("doanova" %in% conf$run) {
+    anova_obj <- aov(log(df[, conf$tgcol])~df[, conf$colname])
+    print(kable(summary(anova_obj)[1][[1]], row.names = FALSE))
+    if ("doetasq" %in% conf$run) {
+      etasq_obj <- summary(anova_obj)[1][[1]][[2]][1]/(summary(anova_obj)[1][[1]][[2]][2]+
+                                                         summary(anova_obj)[1][[1]][[2]][1])
+      cat("\n\n Eta squared: ", etasq_obj, "\n\n")
+    }
+  }
+  if ("doscatterplot" %in% conf$run) {
+    plot(df[, conf$colname], log(df[, conf$tgcol]), xlab = conf$colname, 
+         ylab = conf$tgcol)
+    lm_obj <- lm(log(df[, conf$tgcol])~df[, conf$colname])
+    abline(a= lm_obj$coefficients[1], b = lm_obj$coefficients[2], col=2)
+  }
+
+  if ("doscatterplot" %in% conf$run) {
+    plot(df[, conf$colname], log(df[, conf$tgcol]), xlab = conf$colname, 
+         ylab = conf$tgcol)
+    lm_obj <- lm(log(df[, conf$tgcol])~df[, conf$colname])
+    abline(a= lm_obj$coefficients[1], b = lm_obj$coefficients[2], col=2)
+    print(kable(summary(lm_obj)$coefficients, row.names = FALSE))
+    if ("dorsq" %in% conf$run) {
+      print(kable(cbind(
+        cov = cov(df[, conf$colname], log(df[, conf$tgcol]), use = "complete.obs"),
+        cor = cor(df[, conf$colname], log(df[, conf$tgcol]), use = "complete.obs"),
+        rsq = summary(lm_obj)$r.squared
+      )))
+    }
+  }
+  if (!is.na(conf$desc)) {
+    cat("\n\n", conf$desc, "\n")
+  }
+}
+
+out <- sapply(PollutionBivConf$variables, bivarAnalysis, df = Pollution)
+```

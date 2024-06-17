@@ -1,0 +1,61 @@
+variables:
+  - colname: "prec"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "jant"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "jult"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "ovr65"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "popn"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "educ"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "hous"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "dens"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "nonw"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "wwdrk"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "poor"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "hc"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "nox"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "so2"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""
+  - colname: "humid"
+    tgcol: "mort"
+    run: ["doscatterplot","dorsq"]
+    desc: ""

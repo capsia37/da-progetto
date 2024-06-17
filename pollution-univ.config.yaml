@@ -1,0 +1,49 @@
+variables:
+  - colname: "prec"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "jant"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "jult"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "ovr65"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "popn"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "educ"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "hous"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "dens"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "nonw"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "wwdrk"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "poor"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "hc"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "nox"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "so2"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "humid"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
+  - colname: "mort"
+    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    desc: ""
