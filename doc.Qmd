@@ -158,8 +158,9 @@ summary(reg1)
 reg2 <- lm(mort ~ nonw + prec + educ + so2  + nonw*poor + educ*prec*nonw, data = Pollution)
 summary(reg2)
 
-reg3 <- lm(mort ~ nonw + prec + educ + so2  + nonw*poor + educ*prec*nonw + educ*hous*poor, data = Pollution)
+reg3 <- lm(mort ~ nonw + prec + educ + so2  + nonw*poor + educ*nonw + educ*hous*prec*poor, data = Pollution)
 summary(reg3)
+
 
 AIC(reg3)
 ```
