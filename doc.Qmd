@@ -9,6 +9,7 @@ date: "`r Sys.Date()`"
 ```{r setup, include=FALSE}
 library(knitr)
 library(yaml)
+library(moments)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -56,7 +57,9 @@ univarAnalysis <- function(conf, df) {
       rel = prop.table(table(df[, conf$colname]))
     )), col.names = c("Level", "Abs. Freq", "Rel. Freq"), row.names = FALSE))
   } else {
-    print(kable(as.array(summary(df[, conf$colname])), col.names = c("Stat", "Value")))
+    temp <- as.array(summary(df[, conf$colname]))
+    temp["Skewness"] <- skewness(df[, conf$colname])
+    print(kable(as.array(temp), col.names = c("Stat", "Value")))
   }
   if ("dobarplot" %in% conf$run) {  
     barplot(table(df[, conf$colname]), main=NULL)
