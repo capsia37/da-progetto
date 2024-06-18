@@ -45,11 +45,11 @@ variables:
     desc: ""
   - colname: "hc"
     tgcol: "mort"
-    run: ["doscatterplot","dorsq"]
+    run: ["doscatterplot","dorsq", "uselog"]
     desc: ""
   - colname: "nox"
     tgcol: "mort"
-    run: ["doscatterplot","dorsq"]
+    run: ["doscatterplot","dorsq", "uselog"]
     desc: ""
   - colname: "so2"
     tgcol: "mort"

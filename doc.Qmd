@@ -101,11 +101,11 @@ bivarAnalysis <- function(conf, df) {
     df <- df[df[, conf$colname] != 0,]
   }
   if ("docmpboxplot" %in% conf$run) {
-    boxplot(log(df[, conf$tgcol])~df[, conf$colname], 
+    boxplot(df[, conf$tgcol]~df[, conf$colname], 
             xlab = conf$colname, ylab = conf$tgcol)
   }
   if ("doanova" %in% conf$run) {
-    anova_obj <- aov(log(df[, conf$tgcol])~df[, conf$colname])
+    anova_obj <- aov(df[, conf$tgcol]~df[, conf$colname])
     print(kable(summary(anova_obj)[1][[1]], row.names = FALSE))
     if ("doetasq" %in% conf$run) {
       etasq_obj <- summary(anova_obj)[1][[1]][[2]][1]/(summary(anova_obj)[1][[1]][[2]][2]+
@@ -114,22 +114,22 @@ bivarAnalysis <- function(conf, df) {
     }
   }
   if ("doscatterplot" %in% conf$run) {
-    plot(df[, conf$colname], log(df[, conf$tgcol]), xlab = conf$colname, 
+    plot(df[, conf$colname], df[, conf$tgcol], xlab = conf$colname, 
          ylab = conf$tgcol)
-    lm_obj <- lm(log(df[, conf$tgcol])~df[, conf$colname])
+    lm_obj <- lm(df[, conf$tgcol]~df[, conf$colname])
     abline(a= lm_obj$coefficients[1], b = lm_obj$coefficients[2], col=2)
   }
 
   if ("doscatterplot" %in% conf$run) {
-    plot(df[, conf$colname], log(df[, conf$tgcol]), xlab = conf$colname, 
+    plot(df[, conf$colname], df[, conf$tgcol], xlab = conf$colname, 
          ylab = conf$tgcol)
-    lm_obj <- lm(log(df[, conf$tgcol])~df[, conf$colname])
+    lm_obj <- lm(df[, conf$tgcol]~df[, conf$colname])
     abline(a= lm_obj$coefficients[1], b = lm_obj$coefficients[2], col=2)
     print(kable(summary(lm_obj)$coefficients, row.names = FALSE))
     if ("dorsq" %in% conf$run) {
       print(kable(cbind(
-        cov = cov(df[, conf$colname], log(df[, conf$tgcol]), use = "complete.obs"),
-        cor = cor(df[, conf$colname], log(df[, conf$tgcol]), use = "complete.obs"),
+        cov = cov(df[, conf$colname], df[, conf$tgcol], use = "complete.obs"),
+        cor = cor(df[, conf$colname], df[, conf$tgcol], use = "complete.obs"),
         rsq = summary(lm_obj)$r.squared
       )))
     }

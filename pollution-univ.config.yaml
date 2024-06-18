@@ -33,10 +33,10 @@ variables:
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: ""
   - colname: "hc"
-    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    run: ["doboxplot","dohist","dodensity","doqqplot", "uselog"]
     desc: ""
   - colname: "nox"
-    run: ["doboxplot","dohist","dodensity","doqqplot"]
+    run: ["doboxplot","dohist","dodensity","doqqplot", "uselog"]
     desc: ""
   - colname: "so2"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
