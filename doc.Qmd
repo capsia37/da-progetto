@@ -10,6 +10,7 @@ date: "`r Sys.Date()`"
 library(knitr)
 library(yaml)
 library(moments)
+library(MASS)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -143,4 +144,22 @@ bivarAnalysis <- function(conf, df) {
 }
 
 out <- sapply(PollutionBivConf$variables, bivarAnalysis, df = Pollution)
+```
+
+```{r}
+lreg <- lm(mort ~ nonw, data = Pollution)
+a <- stepAIC(lreg, direction = "both")
+```
+
+```{r}
+reg1 <- lm(mort ~ poor + prec + popn + popn*poor + educ + nonw + so2, data = Pollution)
+summary(reg1)
+
+reg2 <- lm(mort ~ nonw + prec + educ + so2  + nonw*poor + educ*prec*nonw, data = Pollution)
+summary(reg2)
+
+reg3 <- lm(mort ~ nonw + prec + educ + so2  + nonw*poor + educ*prec*nonw + educ*hous*poor, data = Pollution)
+summary(reg3)
+
+AIC(reg3)
 ```
