@@ -2,7 +2,11 @@ variables:
   - colname: "prec"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
-    desc: ""
+    desc: |
+      Notiamo dal Rsq 0.26 e dal p-value basso che ha senso considerare la varibile delle precipitazioni come predittore della mortalità. 
+      Dall'analisi dei residui risulta che questi sono distribuiti attorno allo zero senza formare pattern e dal qqplot che si 
+      distribuiscono secondo una distribuzione normale. Inoltre la distanza di Cook evidenzia 3 outlier che hanno un influenza importante
+      sul modello, ovvero le osservazioni 32, 37 e 49 del dataset.
   - colname: "jant"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
