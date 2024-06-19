@@ -139,6 +139,7 @@ PollutionBivConf <- read_yaml("pollution-biv.config.yaml")
 bivarAnalysis <- function(conf, df) {
   cat("\\newpage")
   cat("\n\n##", conf$colname, "\n")
+  par(mfrow = c(1, 1))
   if ("uselog" %in% conf$run) {
     df[, conf$colname] <- log(df[, conf$colname])
   }
@@ -165,13 +166,8 @@ bivarAnalysis <- function(conf, df) {
          ylab = conf$tgcol)
     lm_obj <- lm(df[, conf$tgcol]~df[, conf$colname])
     abline(a= lm_obj$coefficients[1], b = lm_obj$coefficients[2], col=2)
-  }
-
-  if ("doscatterplot" %in% conf$run) {
-    plot(df[, conf$colname], df[, conf$tgcol], xlab = conf$colname, 
-         ylab = conf$tgcol)
-    lm_obj <- lm(df[, conf$tgcol]~df[, conf$colname])
-    abline(a= lm_obj$coefficients[1], b = lm_obj$coefficients[2], col=2)
+    par(mfrow = c(2, 2))
+    plot(lm_obj, which = c(1,2,4,5))
     print(kable(summary(lm_obj)$coefficients, row.names = FALSE))
     if ("dorsq" %in% conf$run) {
       print(kable(cbind(
