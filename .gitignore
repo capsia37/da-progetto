@@ -1,3 +1,9 @@
+# Custom files
+/doc_files/
+*.html
+*.pdf
+*.tex
+
 # History files
 .Rhistory
 .Rapp.history

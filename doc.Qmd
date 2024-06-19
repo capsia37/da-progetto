@@ -272,4 +272,10 @@ emmaeli2 <- lm(mort ~ educ + nonw + poor + prec*log(nox) + educ*poor*nonw + hous
 summary(emmaeli2)
 
 AIC(emmaeli2)
+
+stepAIC(emmaeli2)
+
+test1 <- lm(mort ~ prec + log(nox) + educ*hous + educ*nonw*poor, data = Pollution)
+summary(test1)
+AIC(test1)
 ```
