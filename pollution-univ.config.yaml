@@ -82,18 +82,16 @@ variables:
   - colname: "hc"
     run: ["doboxplot","dohist","dodensity","doqqplot", "uselog"]
     desc: |
-      ABBIAMO VALUTATO IL LOG, COME SI COMMENTA??????
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 1 e 4 (valutati in logaritmo ????????????????????????????). \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 1,95 e 3,41 con la mediana in 2,67. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori in scala logaritmica si concentra tra 1 e 4, quindi i valori originali tra 3 e 55\
+      Dal boxplot e dal summary, convertendo la scala logaritmica, si osserva, più precisamente, che il 50% della distribuzione si trova tra 7 e 30 con la mediana in 14.4 \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Visto l'indice di skewness si può dire che la distribuzione è leggermente asimmetrica positivamente.
   - colname: "nox"
     run: ["doboxplot","dohist","dodensity","doqqplot", "uselog"]
     desc: |
-      ABBIAMO VALUTATO IL LOG, COME SI COMMENTA??????
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 1 e 4 (valutati in logaritmo ????????????????????????????). \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 1,39 e 3,17 con la mediana in 2,2. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori in scala logaritmica si concentra tra 1 e 4, quindi i valori originali tra 3 e 55\
+      Dal boxplot e dal summary, convertendo la scala logaritmica, si osserva, più precisamente, che il 50% della distribuzione si trova tra 4 e 24 con la mediana in 9 \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Visto l'indice di skewness si può dire che la distribuzione è leggermente asimmetrica positivamente.
   - colname: "so2"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
