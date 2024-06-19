@@ -52,7 +52,7 @@ Le variabili all'interno del dataset proposto sono 16
 
 -   SO2 ➜ Potenziale di inquinamento relativo all'anidride solforosa
 
--   UMIDO ➜ Umidità relativa media annua % alle ore 13:00
+-   HUMID ➜ Umidità relativa media annua % alle ore 13:00
 
 -   MORT ➜ Tasso di mortalità totale corretto per età per 100.000 (abitanti)
 
@@ -210,19 +210,51 @@ summary(a)
 
 L'AIC risultante dal modello sviluppato dalla funzione stepAIC è 429.63 con variabili considerate finali $$\text{mort} \sim \text{prec} + \text{jant} + \text{jult} + \text{ovr65} + \text{popn} + \text{educ} + \text{nonw} + \text{hc} + \text{nox}$$
 
+Considerando le variabili prec, popn, educ, hous, nonw, poor e so2, che, dall'analisi bivariata sono quelle che sembrano essere più correlate alla variabile mort, creiamo il nostro primo modelllo.
+
 ```{r}
-reg1 <- lm(mort ~ poor + prec + popn + popn*poor + educ + nonw + so2, data = Pollution)
-summary(reg1)
-
-reg2 <- lm(mort ~ nonw + prec + educ + so2  + nonw*poor + educ*prec*nonw, data = Pollution)
-summary(reg2)
-
-reg3 <- lm(mort ~ nonw + prec + educ + so2  + nonw*poor + educ*nonw + educ*hous*prec*poor, data = Pollution)
-summary(reg3)
-
-
-AIC(reg3)
+mod1 <- lm(mort ~ prec + popn + educ + hous + nonw + poor + so2, data = Pollution)
+summary(mod1)
+AIC(mod1)
 ```
+
+Si nota che questo modello ha un Adjusted R-squared di 0.6656 e l'AIC di 609.6126
+
+Andando a vedere i p-value, si vede che quello della variabile popn è molto alto e si decide quindi di togliere questa variabile dal modello.
+
+Guardando alla correlazione delle variabili, scegliamo di sostituire so2 con log(nox).
+
+Ed inoltre aggiungiamo wwdrk\*educ, in quanto sono abbastanza correlate tra di loro.
+
+```{r}
+mod2 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + wwdrk*educ, data = Pollution)
+summary(mod2)
+AIC(mod2)
+```
+
+In questo modo l'Adjusted R-squared è arrivato a 0.6825 e l'AIC a 607.333
+
+Ma notiamo che probabilmente wwdrk\*educ non aggiunge molto al nostro modello, quindi lo togliamo.
+
+Sempre guardando la correlazione, proviamo ad aggiungere hous\**educ, poor*\*nonw e poor\*hous e ovr65 \* nonw, che sono quelli con più correlazione
+
+```{r}
+mod3 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + hous*educ + poor*nonw + poor*hous + ovr65*nonw, data = Pollution)
+summary(mod3)
+AIC(mod3)
+```
+
+Ma guardando ai p-value, vediamo che educ\*hous va bene, nonw \* poor va bene ma può essere migliorato, mentre poor \* hous e ovr65\*nonw possono essere eliminati tranquillamente
+
+Per migliorare nonw\*poor proviamo ad aggiungere la variabile educ, in quanto ha senso considerarle assieme
+
+```{r}
+mod4 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + hous*educ + poor*nonw*educ, data = Pollution)
+summary(mod4)
+AIC(mod4)
+```
+
+Otteniamo così un modello con l'Adjusted R-squared di 0.8098 e l'AIC di 578.9574
 
 Il modello da noi formulato è invece il seguente
 
@@ -236,7 +268,7 @@ AIC(emmaeli)
 !!!!!!!!!!!!!!!!!!! RAGAZZI VALUTATE QUESTA::::
 
 ```{r}
-emmaeli2 <- lm(mort ~ educ + nonw + poor + prec*log(nox) + educ*poor*nonw + hous*educ  , data = Pollution)
+emmaeli2 <- lm(mort ~ educ + nonw + poor + prec*log(nox) + educ*poor*nonw + hous*educ, data = Pollution)
 summary(emmaeli2)
 
 AIC(emmaeli2)
