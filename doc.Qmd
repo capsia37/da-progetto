@@ -1,20 +1,60 @@
 ---
 title: "Progetto DA"
-format: pdf
+format: html
+#format: pdf
 editor: visual
 date: "`r Sys.Date()`"
 ---
-
 
 ```{r setup, include=FALSE}
 library(knitr)
 library(yaml)
 library(moments)
+library(ggplot2)
+library(ggcorrplot)
 library(MASS)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Progetto di Data Analytics
+
+Con la presente analisi si vuole sviluppare un modello predittivo per la variabile mort.
+
+### Descrizione delle variabili presenti
+
+Le variabili all'interno del dataset proposto sono 16
+
+-   PREC ➜ Precipitazioni medie annue in pollici
+
+-   JANT ➜ Temperatura media di gennaio in gradi F
+
+-   JULT ➜ Temperatura media di luglio in gradi F
+
+-   OVR65 ➜ % della popolazione SMSA (standard metropolitan statistical area) del 1960 di età pari o superiore a 65 anni
+
+-   POPN ➜ Dimensione media della famiglia
+
+-   EDUC ➜ Anni scolastici medi completati da coloro che hanno più di 22 anni
+
+-   HOUS ➜ % di unità abitative integre e dotate di tutti i servizi
+
+-   DENS ➜ Popolazione per miglio quadrato nelle aree urbanizzate, 1960
+
+-   NONW ➜ % popolazione non bianca nelle aree urbanizzate, 1960
+
+-   WWDRK ➜ % occupati nelle professioni dei colletti bianchi
+
+-   POOR ➜ % di famiglie con reddito \< \$ 3000
+
+-   HC ➜ Potenziale di inquinamento relativo da idrocarburi
+
+-   NOX ➜ Potenziale di inquinamento relativo agli ossidi di azoto
+
+-   SO2 ➜ Potenziale di inquinamento relativo all'anidride solforosa
+
+-   UMIDO ➜ Umidità relativa media annua % alle ore 13:00
+
+-   MORT ➜ Tasso di mortalità totale corretto per età per 100.000 (abitanti)
 
 ## Importazione dei dati
 
@@ -60,6 +100,9 @@ univarAnalysis <- function(conf, df) {
   } else {
     temp <- as.array(summary(df[, conf$colname]))
     temp["Skewness"] <- skewness(df[, conf$colname])
+    if ("kurtosis" %in% conf$run) {
+      temp["Kurtosis"] <- kurtosis(df[, conf$colname])
+    }
     print(kable(as.array(temp), col.names = c("Stat", "Value")))
   }
   if ("dobarplot" %in% conf$run) {  
@@ -146,10 +189,26 @@ bivarAnalysis <- function(conf, df) {
 out <- sapply(PollutionBivConf$variables, bivarAnalysis, df = Pollution)
 ```
 
+# ANALISI MULTIVARIATA: stima del modello
+
+Valutiamo la correlazione tra le varie variabili per vedere se ce ne sono alcune di linearmente dipendenti
+
 ```{r}
-lreg <- lm(mort ~ nonw, data = Pollution)
+ggcorrplot(cor(Pollution), hc.order = TRUE,  type = "lower", lab = F)
+```
+
+Notiamo che non ci sono variabili linearmente dipendenti tra loro visibili tramite alta correlazione a parte *hc* e *nox.* Scegliamo dunque di mantenere la variabile *nox*.
+
+```{r}
+lreg <- lm(mort ~ ., data = Pollution)
 a <- stepAIC(lreg, direction = "both")
 ```
+
+```{r}
+summary(a)
+```
+
+L'AIC risultante dal modello sviluppato dalla funzione stepAIC è 429.63 con variabili considerate finali $$\text{mort} \sim \text{prec} + \text{jant} + \text{jult} + \text{ovr65} + \text{popn} + \text{educ} + \text{nonw} + \text{hc} + \text{nox}$$
 
 ```{r}
 reg1 <- lm(mort ~ poor + prec + popn + popn*poor + educ + nonw + so2, data = Pollution)
@@ -163,4 +222,22 @@ summary(reg3)
 
 
 AIC(reg3)
+```
+
+Il modello da noi formulato è invece il seguente
+
+```{r}
+emmaeli <- lm(mort ~ educ + nonw + poor + prec, data = Pollution)
+summary(emmaeli)
+
+AIC(emmaeli)
+```
+
+!!!!!!!!!!!!!!!!!!! RAGAZZI VALUTATE QUESTA::::
+
+```{r}
+emmaeli2 <- lm(mort ~ educ + nonw + poor + prec*log(nox) + educ*poor*nonw + hous*educ  , data = Pollution)
+summary(emmaeli2)
+
+AIC(emmaeli2)
 ```
