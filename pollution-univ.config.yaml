@@ -2,82 +2,82 @@ variables:
   - colname: "prec"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 30 e 50 pollici annui.\n
-      Dal boxplot e dal summary si osserva più precisamente che il 50% della distribuzione si trova tra 32,75 e 43,25 con la mediana in 38. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 30 e 50 pollici annui.\
+      Dal boxplot e dal summary si osserva più precisamente che il 50% della distribuzione si trova tra 32,75 e 43,25 con la mediana in 38. \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Analizzando l'indice di asimmetria si può dire che la distribuzione è leggermente asimmetrica negativamente (coda lunga a sinsitra).
   - colname: "jant"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 20 e 30 gradi Fahrenheit per poi decrescere all'aumentare dei gradi.\n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 27 e 40 con la mediana in 31,5. \n
-      Dal qqplot si nota che non segue per niente l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 20 e 30 gradi Fahrenheit per poi decrescere all'aumentare dei gradi.\
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 27 e 40 con la mediana in 31,5. \
+      Dal qqplot si nota che non segue per niente l'andamento di una gaussiana. \
       Visto l'indice di asimmetria si può dire che la distribuzione è caratterizzata da una leggera asimmetria positiva (coda lunga a destra).
   - colname: "jult"
     run: ["doboxplot","dohist","dodensity","doqqplot", "kurtosis"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 70 e 75 gradi Fahrenheit. \n
-      Dal boxplot e dal summary si vede che il 50% della distribuzione si trova tra 72 e 77,25 con la mediana in 74. \n
-      Visto l'indice di skewness si pùò affermare che la distribuzione appare simmetrica e si è proceduto con il calcolo ulteriore dell'indice di curtosi che risulta essere 2.911 ≈ 3, indice di riferimento della gaussiana.
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 70 e 75 gradi Fahrenheit. \
+      Dal boxplot e dal summary si vede che il 50% della distribuzione si trova tra 72 e 77,25 con la mediana in 74. \
+      Visto l'indice di skewness si pùò affermare che la distribuzione appare simmetrica e si è proceduto con il calcolo ulteriore dell'indice di curtosi che risulta essere 2.911 ≈ 3, indice di riferimento della gaussiana.\
       Si può dire che la distribuzione è leptocurtica (le code sono più corte rispetto a quelle di una gaussiana).
 #il qqplot fa schifo, forse meglio togliere il grafico?
   - colname: "ovr65"
     run: ["doboxplot","dohist","dodensity","doqqplot", "kurtosis"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 7 e 10. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 7,675 e 9,7 con la mediana in 9. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
-      Visto l'indice di asimmetria si può dire che la distribuzione è abbastanza simmetrica.
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 7 e 10. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 7,675 e 9,7 con la mediana in 9. \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
+      Visto l'indice di asimmetria si può dire che la distribuzione è abbastanza simmetrica.\
       Siccome l'indice di curtosi risulta essere 2.3, le code risultano essere più corte rispetto a quelle di una gaussiana.
   - colname: "popn"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 3,2 e 3,4 . \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 3,21 e 3,36 con la mediana in 3,265. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 3,2 e 3,4 . \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 3,21 e 3,36 con la mediana in 3,265. \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Visto l'indice di asimmetria che risulta essere negativo si può affermare che la distribuzione presenta una coda lunga a sinistra.
   - colname: "educ"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si nota che dda 9 a 11,5 anni la distribuzione cresce notevolmente per poi diminuire \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 10,4 e 11,5 con la mediana in 11,05. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si nota che dda 9 a 11,5 anni la distribuzione cresce notevolmente per poi diminuire \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 10,4 e 11,5 con la mediana in 11,05. \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Dato l'indice di skewness si osserva una leggera asimmetria negativa.
   - colname: "hous"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 75 e 85. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 78,38 e 83,6 con la mediana in 81,15. \n
-      Dal qqplot si nota che non segue per nulla l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 75 e 85. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 78,38 e 83,6 con la mediana in 81,15. \
+      Dal qqplot si nota che non segue per nulla l'andamento di una gaussiana. \
       Analizzando l'indice di asimmetria si afferma che c'è una leggera asimmetria negativa nella distribuzione.
   - colname: "dens"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 2000 e 5000. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 3104 e 4520 con la mediana in 3567. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 2000 e 5000. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 3104 e 4520 con la mediana in 3567. \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Visto l'indice di asimmetria si può dire che la distribuzione è leggermente asimmetrica positivamente.
   - colname: "nonw"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra lo 0 e il 15%. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 4,95 e 15,65 con la mediana in 10,4. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra lo 0 e il 15%. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 4,95 e 15,65 con la mediana in 10,4. \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       L'indice di skewness evidenzia una leggera positività nell'asimmetria della distribuzione con code lunghe verso destra
   - colname: "wwdrk"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra il 40 e il 55%. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 43,25 e 49,52 con la mediana in 45,5. \n
-      Dal qqplot si nota che la distribuzione non è troppo distante da una gaussiana. \n
-      L'indice di skewness limitrofo allo 0 si può affermare che la distribuzione è abbastanza simmetrica.
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra il 40 e il 55%. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 43,25 e 49,52 con la mediana in 45,5. \
+      Dal qqplot si nota che la distribuzione non è troppo distante da una gaussiana. \
+      L'indice di skewness limitrofo allo 0 si può affermare che la distribuzione è abbastanza simmetrica.\
       Notando l'indice di curtosi dunque si può dire che le code risultino essere più pesanti di quelle di una guassiana (platicurtosi).
   - colname: "poor"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 10 e 14%. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 12 e 15,15 con la mediana in 13,2. Inoltre si notano alcuni outliers a destra, arrivando fino ad un massimo di 26,4. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 10 e 14%. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 12 e 15,15 con la mediana in 13,2. Inoltre si notano alcuni outliers a destra, arrivando fino ad un massimo di 26,4. \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Visto l'indice di skewness positivo si può dire che la distribuzione è asimmetrica con code lunghe a destra.
   - colname: "hc"
     run: ["doboxplot","dohist","dodensity","doqqplot", "uselog"]
@@ -96,27 +96,27 @@ variables:
   - colname: "so2"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 0 e 50. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 11 e 69 con la mediana in 30. \n
-      Inoltre si notano alcuni outliers a destra, arrivando fino ad un massimo di 278. \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 0 e 50. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 11 e 69 con la mediana in 30. \
+      Inoltre si notano alcuni outliers a destra, arrivando fino ad un massimo di 278. \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \ 
       Visto l'indice di skewness si può dire che c'è una simmetria positiva.
   - colname: "humid"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 50 e 60. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 55 e 60 con la mediana in 57. 
-      Dal boxplot inoltre si evidenziano dei valori outliers presenti da entrambi i lati della distribuzione, ampliando il minimo al valore 38 e il massimo a 73 \n
-      Dal qqplot si nota che non segue l'andamento di una gaussiana. \n
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 50 e 60. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 55 e 60 con la mediana in 57. \
+      Dal boxplot inoltre si evidenziano dei valori outliers presenti da entrambi i lati della distribuzione, ampliando il minimo al valore 38 e il massimo a 73 \
+      Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Visto l'indice di skewness si può dire che la distribuzione è leggermente asimmetrica positivamente.
     
   - colname: "mort"
     run: ["doboxplot","dohist","dodensity","doqqplot", "kurtosis"]
     desc: |
-      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 850 e 1050. \n
-      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 898,4 e 983,2 con la mediana in 943,7. \n
-      Inoltre si vede che la media e la mediana sono molto vicine, suggerendo una possibile distribuzione simmetrica.
-      Dal qqplot si nota che segue abbastanza l'andamento di una gaussiana. \n
-      Visto l'indice di skewness molto vicino allo 0 si può affermare dunque che la distribuzione è simmetrica.
+      Dall'istogramma si vede che la maggior parte dei valori si concentra tra 850 e 1050. \
+      Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 898,4 e 983,2 con la mediana in 943,7. \
+      Inoltre si vede che la media e la mediana sono molto vicine, suggerendo una possibile distribuzione simmetrica.\
+      Dal qqplot si nota che segue abbastanza l'andamento di una gaussiana. \
+      Visto l'indice di skewness molto vicino allo 0 si può affermare dunque che la distribuzione è simmetrica.\
       Analizzando dunque l'indice di curtosi che risulta essere molto vicino a 3,si può dire che le code sono pesanti al pari di quelle di una gaussiana.
       
