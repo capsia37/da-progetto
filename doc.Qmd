@@ -191,13 +191,30 @@ out <- sapply(PollutionBivConf$variables, bivarAnalysis, df = Pollution)
 
 # ANALISI MULTIVARIATA: stima del modello
 
-Valutiamo la correlazione tra le varie variabili per vedere se ce ne sono alcune di linearmente dipendenti
+In primis, per procedere con l'analisi multivariata, si va a valutare la correlazione tra le varie variabili per diagnosticare eventualmente casi di ridondanza.
 
 ```{r}
 ggcorrplot(cor(Pollution), hc.order = TRUE,  type = "lower", lab = F)
 ```
 
-Notiamo che non ci sono variabili linearmente dipendenti tra loro visibili tramite alta correlazione a parte *hc* e *nox.* Scegliamo dunque di mantenere la variabile *nox*.
+Facendo alcune considerazioni preliminari, si suppone che l'inquinamento dei gas nell'atmosfera che provocano ad esempio piogge acide risultino dannose per l'organismo con un consequenziale risolvo di un aumento della mortalità.
+
+Si decide di procedere dunque con l'applicazione del logaritmo alle singole varibili nox, so2 e hc
+
+```{r}
+datasetlog <- Pollution
+datasetlog$hc <- log(datasetlog$hc)
+datasetlog$nox <- log(datasetlog$nox)
+datasetlog$so2 <- log(datasetlog$so2)
+
+ggcorrplot(cor(datasetlog), hc.order = TRUE,  type = "lower", lab = F)
+```
+
+Si può evidenziare come la correlazione delle tre suddette variabili, specialmente con la variabile mort, sia aumentata decisamente, con un futuro impatto anche nell'aumento del valore dell'indice Adjusted-$R^2$
+
+Si nota anche come l'elevata correlazione tra le variabili hc e nox implichino ridondanza e dipendenza lineare. Si preferisce dunque scegliere di mantenere una sola delle due variabili, ovvero nox.
+
+Si procede ora con formulare un primo abbozzo del modello di regressione multivariata tramite StepAIC, in maniera tale da avere un metro di paragone anche se con un modello costruito algoritmicamente.
 
 ```{r}
 lreg <- lm(mort ~ ., data = Pollution)
@@ -259,23 +276,32 @@ Otteniamo così un modello con l'Adjusted R-squared di 0.8098 e l'AIC di 578.957
 Il modello da noi formulato è invece il seguente
 
 ```{r}
-emmaeli <- lm(mort ~ educ + nonw + poor + prec, data = Pollution)
-summary(emmaeli)
+regmulti1 <- lm(mort ~ educ + nonw + poor + prec*log(nox) + educ*poor*nonw + hous*educ  , data = Pollution)
+summary(regmulti1)
 
-AIC(emmaeli)
+AIC(regmulti1)
+
+
 ```
 
-!!!!!!!!!!!!!!!!!!! RAGAZZI VALUTATE QUESTA::::
+Questo modello ha un indice $R^2=80,62\%$ che è sicuramente sufficientemente elevato per poter essere considerato un buon modello. L'AIC corrispondente è di 580.8, che è un valore accettabile e inferiore rispetto a ciò che si era ottenuto con il modello formulato tramite la funzione stepAIC originariamente.
+
+Si prova dunque ora a riapplicare la funzione stepAIC al modello *regmulti1* appena formulato, per vedere se ne è ancora migliorabile la stima
 
 ```{r}
-emmaeli2 <- lm(mort ~ educ + nonw + poor + prec*log(nox) + educ*poor*nonw + hous*educ, data = Pollution)
-summary(emmaeli2)
+regmultiAIC <- stepAIC(regmulti1)
+summary(regmultiAIC)
+AIC(regmultiAIC)
+```
 
-AIC(emmaeli2)
+\'E aumentato leggermente l' $R^2$ che ora risulta essere pari all'80,98% e l'AIC è sceso a 578,96, che è un valore migliore rispetto a quello ottenuto con il modello *regmulti1*.
 
-stepAIC(emmaeli2)
+Un altro modello che restituisce i medesimi parametri appena citati è questo sottostante, che sembra essere un buon compromesso tra bontà del fit e complessità del modello derivante dal numero di variabili e dal loro prodotto.
 
-test1 <- lm(mort ~ prec + log(nox) + educ*hous + educ*nonw*poor, data = Pollution)
-summary(test1)
-AIC(test1)
+```{r}
+
+test2 <- lm(mort ~ prec + log(nox) + educ*hous + educ*nonw*poor, data = Pollution)
+summary(test2)
+AIC(test2)
+
 ```
