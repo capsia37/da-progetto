@@ -3,7 +3,7 @@ variables:
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      Notiamo dal Rsq 0.26 e dal p-value basso che ha senso considerare la varibile delle precipitazioni come predittore della mortalità. 
+      Notiamo dal Rsq 0.26 e dal p-value basso che ha senso considerare la varibile delle precipitazioni come predittore della mortalità.\
       Dall'analisi dei residui risulta che questi sono distribuiti attorno allo zero senza formare pattern e dal qqplot che si 
       distribuiscono secondo una distribuzione normale. Inoltre la distanza di Cook evidenzia 3 outlier che hanno un'influenza importante
       sul modello, ovvero le osservazioni 32, 37 e 49 del dataset.
@@ -11,115 +11,116 @@ variables:
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      La variabile jant ha un indice R-squared di 0.0009 e un p-value molto elevato pari a 0.82. Si può già supporre che questa variabile non incida
-      in maniera utile sulla mortalità. Dall'analisi dei residui i valori sembrano distribuirsi in maniera abbastanza causuale attorno allo zero,
-      nel qqplot si osserva che i punti si distribuiscono in maniera abbastanza lineare nonostanza la presenza di alcuni outlier, come i punti 37 e 49.
-      Anche nella distanza di Cook si possono osservare 3 outliers (32, 37, 49) che potrebbero influire sul modello. 
+      La variabile jant ha un indice R-squared di 0.0009 e un p-value molto elevato pari a 0.82.\
+      Si può già supporre che questa variabile non incida in maniera utile sulla mortalità.\
+      Dall'analisi dei residui i valori sembrano distribuirsi in maniera abbastanza causuale attorno allo zero,
+      nel qqplot si osserva che i punti si distribuiscono in maniera abbastanza lineare nonostanza la presenza di alcuni outlier, come i punti 37 e 49.\
+      Anche nella distanza di Cook si possono osservare 3 outliers (32, 37, 49) che potrebbero influire sul modello.\
       Si ipotizza che questa variabile non debba essere presa in considerazione per la costruzione del fit multivariato.
   - colname: "jult"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      La variabile jult ha un indice R-squared di 0.077 e un p-value relativamente alto pari a 0.03. 
+      La variabile jult ha un indice R-squared di 0.077 e un p-value relativamente alto pari a 0.03.\
       Dall'analisi dei residui i valori sembrano distribuirsi in maniera abbastanza causuale attorno allo zero e il qqplot suggerisce la presenza di due punti all'estremità, 
-      37 e 56, che sembrano deviare dalla retta diagonale. Tutti gli altri  punti sembrano più o meno assumere un comportamento gaussiano anchese con qualche ragionevole dubbio.
-      Le osservazini 16, 37 e 56 hanno valori di Cook's distance più alti rispetto alle altre, suggerendo che sono influenti e potrebbero essere outliers
+      37 e 56, che sembrano deviare dalla retta diagonale. Tutti gli altri  punti sembrano più o meno assumere un comportamento gaussiano anchese con qualche ragionevole dubbio.\
+      Le osservazini 16, 37 e 56 hanno valori di Cook's distance più alti rispetto alle altre, suggerendo che sono influenti e potrebbero essere outliers.
   - colname: "ovr65"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      La variabile ovr65 ha un indice R-squared di 0.03 e un p-value abbastanza elevato pari a 0.18. 
-      Dal questi valori si ipotizza che la variabile non influisca in maniera consistente sul modello.
-      Potevamo già prevederlo in partenza poichè il dataset presenta la variabile mort corretta per età.
+      La variabile ovr65 ha un indice R-squared di 0.03 e un p-value abbastanza elevato pari a 0.18.\
+      Dal questi valori si ipotizza che la variabile non influisca in maniera consistente sul modello.\
+      Potevamo già prevederlo in partenza poichè il dataset presenta la variabile mort corretta per età.\
       I residui appaiono distribuiti casualmente intorno allo zero senza pattern evidenti e i residui standardizzati
-      non si discotano troppo dalla retta dei quantili teorici della gaussiana tranne che nelle code.
+      non si discotano troppo dalla retta dei quantili teorici della gaussiana tranne che nelle code.\
       Inoltre la Distanza di Cook mostra la presenza di tre valori "anomali" (37, 49, 56) 
       che sembrano incidere abbastanza nel modello.
   - colname: "popn"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      L'indice R-squared della variabil popn è pari 0.13 e il suo p-value 0.0051. 
-      Si potrebbe pensare che la suddetta variabile possa incidere sul modello di previsione finale.
+      L'indice R-squared della variabil popn è pari 0.13 e il suo p-value 0.0051.\
+      Si potrebbe pensare che la suddetta variabile possa incidere sul modello di previsione finale.\
       I residui sembrano distribuirsi in maniera abbastanza casuale attorno allo zero e 
-      il qqplot suggerisce che i residui si distribuiscono in maniera gaussiana.
-      La distanza di Cook evidenzia tre possibili outlier, ovvero la misurazione 37, 38 e 49
+      il qqplot suggerisce che i residui si distribuiscono in maniera gaussiana.\
+      La distanza di Cook evidenzia tre possibili outlier, ovvero la misurazione 37, 38 e 49.
   - colname: "educ"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      L'indice R-squared ha un valore di 0.26 e il p-value è di 0.00003. La variabile
-      mort pare alquanto contributiva al modello. 
+      L'indice R-squared ha un valore di 0.26 e il p-value è di 0.00003.\
+      La variabile mort pare alquanto contributiva al modello.\
       I residui sono distribuiti in maniera aleatoria rispetto allo zero e il qqplot suggerisce
-      l'andamento di una gaussiana ma con delle code più pesanti.
+      l'andamento di una gaussiana ma con delle code più pesanti.\
       La distanza di Cook evidenzia tre outlier (28, 37, 59) che potrebbero influire sul modello.
   - colname: "hous"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      La variabile hous ha un indice R-squared di 0.18 e un p-value di 0.00067.
-      Si pensa che la variabile possa influire sul modello.
-      I residui sono distribuiti in maniera casuale attorno allo zero.
-      Il qqplot suggerisce un andamento gaussiano ma con code più leggere.
+      La variabile hous ha un indice R-squared di 0.18 e un p-value di 0.00067.\
+      Si pensa che la variabile possa influire sul modello.\
+      I residui sono distribuiti in maniera casuale attorno allo zero.\
+      Il qqplot suggerisce un andamento gaussiano ma con code più leggere.\
       La distanza di Cook mostra tre valori, il 5, 37 e 49, che potrebbero influenzare la distribuzione.
   - colname: "dens"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      La variabile dens ha un indice R-squared di 0.07 e un p-value relativamente alto di 0.04.
-      Si pensa che la variabile non influisca sul modello.
-      I residui sono distribuiti in maniera casuale attorno allo zero.
-      Il qqplot mostra che i residui standardizzati si allineino abbastanza secondo un andamento gaussiano.
+      La variabile dens ha un indice R-squared di 0.07 e un p-value relativamente alto di 0.04.\
+      Si pensa che la variabile non influisca sul modello.\
+      I residui sono distribuiti in maniera casuale attorno allo zero.\
+      Il qqplot mostra che i residui standardizzati si allineino abbastanza secondo un andamento gaussiano.\
       La distanza di Cook mostra tre valori, il 5, 37 e 59, che potrebbero influenzare la distribuzione.
   - colname: "nonw"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      La variabile nonw ha un indice R-squared di 0.41 e un p-value di 0.
+      La variabile nonw ha un indice R-squared di 0.41 e un p-value di 0.\
       Il valore straordinario del p-value suggerisce che questa variabile sia quella che più
-      definisca il modello.
+      definisca il modello.\
       I residui si dispongono in maniera casuale attorno allo zero e il qqplot mostra 
-      un andamento gaussiano con forse una leggere tendenza ad avere delle code più leggere.
+      un andamento gaussiano con forse una leggere tendenza ad avere delle code più leggere.\
       La distanza di Cook mostra tre valori, il 31, 37 e 49, che potrebbero influenzare la distribuzione.
   - colname: "wwdrk"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      La variabile wwdrk ha un indice R-squared di 0.07 e un p-value di 0.04.
-      Si pensa che la variabile non influisca sul modello.
-      I residui sono distribuiti in maniera casuale attorno allo zero.
-      Il qqplot mostra che i residui standardizzati si allineino abbastanza secondo un andamento gaussiano.
+      La variabile wwdrk ha un indice R-squared di 0.07 e un p-value di 0.04.\
+      Si pensa che la variabile non influisca sul modello.\
+      I residui sono distribuiti in maniera casuale attorno allo zero.\
+      Il qqplot mostra che i residui standardizzati si allineino abbastanza secondo un andamento gaussiano.\
       La distanza di Cook mostra tre valori, il 5, 37 e 59, che potrebbero influenzare la distribuzione.
   - colname: "poor"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
-      Il valore R-squared della variabile poor è di 0.17 e il p-value è di 0.001, relativamente basso.
-      Si suppone dunque che la variabile incida sul modello.
-      I residui sono distribuiti in maniera casuale attorno allo zero.
+      Il valore R-squared della variabile poor è di 0.17 e il p-value è di 0.001, relativamente basso.\
+      Si suppone dunque che la variabile incida sul modello.\
+      I residui sono distribuiti in maniera casuale attorno allo zero.\
       Il qqplot mostra che i residui standardizzati non seguano molto bene un andamento gaussiano, o almeno solo 
-      per una minima parte. Si evidenziano delle code molto più leggere.
+      per una minima parte. Si evidenziano delle code molto più leggere.\
       La distanza di Cook mostra tre valori, il 32, 37 e 49, che potrebbero essere possibili outliers.
   - colname: "hc"
     tgcol: "mort"
     run: ["doscatterplot","dorsq", "uselog"]
     desc: |
-      La variabile hc è stata studiata in scala logaritmica. La sua relazione con la variabile target mort
-      mostra un indice R-squared di 0.023 e un p-value di 0.25 che pare alquanto alto.
-      Si suppone dunque che la variabile non influisca sul modello.
-      I residui sono distribuiti in maniera casuale attorno allo zero.
-      Il qqplot mostra che i residui standardizzati seguano sufficientemente bene un andamento gaussiano.
+      La variabile hc è stata studiata in scala logaritmica.\
+      La sua relazione con la variabile target mort mostra un indice R-squared di 0.023 e un p-value di 0.25 che pare alquanto alto.\
+      Si suppone dunque che la variabile non influisca sul modello.\
+      I residui sono distribuiti in maniera casuale attorno allo zero.\
+      Il qqplot mostra che i residui standardizzati seguano sufficientemente bene un andamento gaussiano.\
       Dalla Cook's Distance si notano il valore 29, 47 e 49 che paiono essere possibili valori anomali.
   - colname: "nox"
     tgcol: "mort"
     run: ["doscatterplot","dorsq", "uselog"]
     desc: |
-      La variabile nox è stata analizzata in scala logaritmica.
-      L'indice R-squared è pari a 0.085 e il p-value è di 0.0236.
-      Si suppone che la variabile potrebbe influire sul modello, nonostante il suo p-value non sia bassissimo.
+      La variabile nox è stata analizzata in scala logaritmica.\
+      L'indice R-squared è pari a 0.085 e il p-value è di 0.0236.\
+      Si suppone che la variabile potrebbe influire sul modello, nonostante il suo p-value non sia bassissimo.\
       Questo per delle supposizioni preliminari su cosa possa effetivamente influire su un modello che deve descrivere
-      la mortalità.
-      I residui sono distribuiti in maniera casuale attorno allo zero.
+      la mortalità.\
+      I residui sono distribuiti in maniera casuale attorno allo zero.\
       Mentre dai  QQplot non sembra che la distribuzione rispetti l'andamento di una gaussiana. Inoltre la 
       Distanza di Cook suggerisce tre valori che si discostano, quali il 29, 47 e 49, e soprattutto il primo 
       pare incidere in maniera significativa sul modello.
@@ -127,18 +128,18 @@ variables:
     tgcol: "mort"
     run: ["doscatterplot","dorsq", "uselog"]
     desc: |
-      Anche alla variabile so2 è stao applicato il logaritmo.
-      Dall'analisi si vede che ha un indice R-squared di 0.16 e un p-value di 0.0014.
-      Si suppone che la variabile possa influire sul modello.
-      I residui sono distribuiti in maniera casuale attorno allo zero.
-      Il qqplot mostra che i residui standardizzati seguono ababstanza precisamente l'andamento gaussiano.
+      Anche alla variabile so2 è stato applicato il logaritmo.\
+      Dall'analisi si vede che ha un indice R-squared di 0.16 e un p-value di 0.0014.\
+      Si suppone che la variabile possa influire sul modello.\
+      I residui sono distribuiti in maniera casuale attorno allo zero.\
+      Il qqplot mostra che i residui standardizzati seguono ababstanza precisamente l'andamento gaussiano.\
       La distanza di Cook evidenzia un valore soprattutto che potrebbe influire sul modello ed è il numero 37.
   - colname: "humid"
     tgcol: "mort"
     run: ["doscatterplot","dorsq"]
     desc: |
       L'indice R-squared è pari a 0.008 e il suo p-value è di 0.5. Essendo quest'ultimo 
-      valore molto alto si suppone che la variabile non influisca sul modello.
-      I residui sono distribuiti in maniera casuale attorno allo zero.
-      Il qqplot mostra che i residui standardizzati si attengono abbastanza bene all'andamento della retta.
+      valore molto alto si suppone che la variabile non influisca sul modello.\
+      I residui sono distribuiti in maniera casuale attorno allo zero.\
+      Il qqplot mostra che i residui standardizzati si attengono abbastanza bene all'andamento della retta.\
       La Cook's Distance mostra principalemente due valori che sono anomali, ovvero il 18 e 49.
