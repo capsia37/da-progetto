@@ -191,6 +191,39 @@ bivarAnalysis <- function(conf, df) {
 out <- sapply(PollutionBivConf$variables, bivarAnalysis, df = Pollution)
 ```
 
+### Considerazioni
+
+Le varie analisi bivariate per le singole variabili evidenziano come ci sia un dato che risulta sempre anomalo (in 12 variabili su 16) quando viene valutata la Cook's Distance. Questo è l'osservazione 37. Si decide dunque di procedere effettuando un ricalcolo dei valori degli indici $R^2$-Adjusted e p-value delle singole variabili, utilizzando il medesimo dataset epurato però della suddetta rilevazione.
+
+```{r}
+senza37 <- Pollution[-37, ]
+
+
+bivarAnalysisLight <- function(conf, df) {
+  cat("\n\n##", conf$colname, "\n")
+  
+  if ("uselog" %in% conf$run) {
+    df[, conf$colname] <- log(df[, conf$colname])
+  }
+ 
+  if ("doscatterplot" %in% conf$run) {
+    lm_obj <- lm(df[, conf$tgcol]~df[, conf$colname])
+    print(kable(summary(lm_obj)$coefficients, row.names = FALSE))
+    if ("dorsq" %in% conf$run) {
+      print(kable(cbind(
+        cov = cov(df[, conf$colname], df[, conf$tgcol], use = "complete.obs"),
+        cor = cor(df[, conf$colname], df[, conf$tgcol], use = "complete.obs"),
+        rsq = summary(lm_obj)$r.squared
+      )))
+    }
+  }
+
+}
+
+
+out <- sapply(PollutionBivConf$variables, bivarAnalysisLight, df = senza37)
+```
+
 # ANALISI MULTIVARIATA: stima del modello
 
 In primis, per procedere con l'analisi multivariata, si va a valutare la correlazione tra le varie variabili per diagnosticare eventualmente casi di ridondanza.
@@ -199,9 +232,7 @@ In primis, per procedere con l'analisi multivariata, si va a valutare la correla
 ggcorrplot(cor(Pollution), hc.order = TRUE,  type = "lower", lab = F)
 ```
 
-Facendo alcune considerazioni preliminari, si suppone che l'inquinamento dei gas nell'atmosfera che provocano ad esempio piogge acide risultino dannose per l'organismo con un consequenziale risolvo di un aumento della mortalità.
-
-Si decide di procedere dunque con l'applicazione del logaritmo alle singole varibili nox, so2 e hc
+Poichè nell'analisi bivariata sono stati considerati i logaritmi delle variabili *nox*, *so2* e *hc,* si riesegue la matrice di correlazione con le variabili in scala logaritmica:
 
 ```{r}
 datasetlog <- Pollution
@@ -214,7 +245,9 @@ ggcorrplot(cor(datasetlog), hc.order = TRUE,  type = "lower", lab = F)
 
 Si può evidenziare come la correlazione delle tre suddette variabili, specialmente con la variabile mort, sia aumentata decisamente, con un futuro impatto anche nell'aumento del valore dell'indice Adjusted-$R^2$
 
-Si nota anche come l'elevata correlazione tra le variabili hc e nox implichino ridondanza e dipendenza lineare. Si preferisce dunque scegliere di mantenere una sola delle due variabili, ovvero nox.
+Si nota anche come l'elevata correlazione tra le variabili *hc* e *nox* implichino ridondanza e dipendenza lineare. Si preferisce dunque scegliere di mantenere una sola delle due variabili, ovvero *nox*.
+
+### Modello StepAIC
 
 Si procede ora con formulare un primo abbozzo del modello di regressione multivariata tramite StepAIC, in maniera tale da avere un metro di paragone anche se con un modello costruito algoritmicamente.
 
@@ -227,19 +260,23 @@ a <- stepAIC(lreg, direction = "both")
 summary(a)
 ```
 
-L'AIC risultante dal modello sviluppato dalla funzione stepAIC è 429.63 con variabili considerate finali $$\text{mort} \sim \text{prec} + \text{jant} + \text{jult} + \text{ovr65} + \text{popn} + \text{educ} + \text{nonw} + \text{hc} + \text{nox}$$
+L'indice $R^2$ del modello è pari a 71.39%
 
-Considerando le variabili prec, popn, educ, hous, nonw, poor e log(nox), che, dall'analisi bivariata sono quelle che sembrano essere più correlate alla variabile mort, creiamo il nostro primo modelllo.
+L'AIC risultante è di 429.63, con variabili considerate finali $$\text{mort} = \text{prec} + \text{jant} + \text{jult} + \text{ovr65} + \text{popn} + \text{educ} + \text{nonw} + \text{hc} + \text{nox}$$
+
+### Primo modello
+
+Considerando le variabili *prec*, *popn*, *educ*, *hous*, *nonw*, *poor, log(so2)* e *log(nox)*, che, dall'analisi bivariata sono quelle che sembrano essere più correlate alla variabile *mort*, creiamo il nostro primo modelllo.
 
 ```{r}
-mod1 <- lm(mort ~ prec + popn + educ + hous + nonw + poor + log(nox), data = Pollution)
+mod1 <- lm(mort ~ prec + popn + educ + hous + nonw + log(so2) + poor + log(nox), data = Pollution)
 summary(mod1)
 AIC(mod1)                        
 ```
 
-Si nota che questo modello ha un Adjusted R-squared di 0.6752 e l'AIC di 607.8757
+Si nota che questo modello ha un Adjusted R-squared di 67.41% e l'AIC di 608.9.
 
-Andando a vedere i p-value, si vede che quello della variabile popn è molto alto e si decide quindi di togliere questa variabile dal modello.
+Andando a vedere i p-value, si vede che quello delle variabili *popn* e *log(so2)* è molto alto e si decide quindi di toglierle dal modello.
 
 Ed inoltre aggiungiamo wwdrk\*educ, in quanto sono abbastanza correlate tra di loro.
 
@@ -253,7 +290,7 @@ In questo modo l'Adjusted R-squared è arrivato a 0.6825 e l'AIC a 607.333
 
 Ma notiamo che probabilmente wwdrk\*educ non aggiunge molto al nostro modello, quindi lo togliamo.
 
-Sempre guardando la correlazione, proviamo ad aggiungere hous\**educ, poor*\*nonw e poor\*hous e ovr65 \* nonw, che sono quelli con più correlazione
+Sempre guardando la correlazione, proviamo ad aggiungere $\text{hous}*\text{educ}$, $\text{poor}*\text{nonw}$ , $\text{poor}*\text{hous}$ e $\text{ovr65}*\text{nonw}$ che sono quelli con più correlazione
 
 ```{r}
 mod3 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + hous*educ + poor*nonw + poor*hous + ovr65*nonw, data = Pollution)
@@ -261,9 +298,9 @@ summary(mod3)
 AIC(mod3)
 ```
 
-Ma guardando ai p-value, vediamo che educ\*hous va bene, nonw \* poor va bene ma può essere migliorato, mentre poor \* hous e ovr65\*nonw possono essere eliminati tranquillamente
+Ma guardando ai p-value, vediamo che $\text{educ}*\text{hous}$ va bene, $\text{poor}*\text{nonw}$ va bene ma può essere migliorato, mentre $\text{poor}*\text{hous}$ e $\text{ovr65}*\text{nonw}$ possono essere eliminati tranquillamente.
 
-Per migliorare nonw\*poor proviamo ad aggiungere la variabile educ, in quanto ha senso considerarle assieme
+Per migliorare $\text{poor}*\text{nonw}$ proviamo ad aggiungere la variabile $\text{educ}$ , in quanto ha senso considerarle assieme
 
 ```{r}
 mod4 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + hous*educ + poor*nonw*educ, data = Pollution)
@@ -271,37 +308,60 @@ summary(mod4)
 AIC(mod4)
 ```
 
-Otteniamo così un modello con l'Adjusted R-squared di 0.8098 e l'AIC di 578.9574
+Otteniamo così un modello con l'Adjusted R-squared di 80.98% e l'AIC di 578.9574
 
-Il modello da noi formulato è invece il seguente
+$$ mort = prec + log(nox) + educ*hous + educ*nonw*poor $$
+
+#### Primo modello senza osservazione 37
+
+Abbiamo visto però dall'analisi bivariata senza l'osservazione 37 che la variabile *so2* dovrebbe essere di fondamentale importanza per contributo al modello ma nel fit appena presentato è stata scartata al primo step.
+
+Proviamo dunque a vedere se, considerando il nuovo dataset *senza37* e l'ultimo modello fittante proposto, la suddetta variabile ci porta dei valori migliori in termini di $R^2$-adjusted ed AIC.
 
 ```{r}
-regmulti1 <- lm(mort ~ educ + nonw + poor + prec*log(nox) + educ*poor*nonw + hous*educ  , data = Pollution)
+mod5 <- lm(mort ~ prec + educ + hous + nonw + poor + log(so2)+ log(nox) + hous*educ + poor*nonw*educ, data = senza37)
+summary(mod5)
+AIC(mod5)
+```
+
+Si vede che il valore dell'indice $R^2$-adjusted (80.01) è rimasto pressochè invariato, mentre è sceso abbastanza il modulo dell'AIC che risulta ora essere pari a 565.76, e dunque migliore.
+
+### Secondo modello
+
+Facendo alcune considerazioni aggiuntive però, si suppone che l'inquinamento dei gas nell'atmosfera provochi ad esempio piogge acide, evento atmosferisco che essendo dannoso per l'organismo, potrebbe comportare un aumento della mortalità.
+
+Infatti si va a valutare anche la combinazione delle variabili $\text{prec}*\log(\text{nox})*\log(\text{so2})$
+
+```{r}
+regmulti1 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = Pollution)
 summary(regmulti1)
 
 AIC(regmulti1)
 
+```
+
+Questo modello ha un indice $R^2=81,19\%$ che è sicuramente sufficientemente elevato per poter essere considerato un buon modello. L'AIC corrispondente è di 581.7, che è un valore comunque accettabile.
+
+Nonostante si possa reputare una buona supposizione, il modello non sembra confermarla, o meglio, sembra essercene uno migliore, che è quello visto in precedenza.
+
+Si prova ora a cambiare il dataset utilizzando quello senza l'osservazione numero 37, mantenendo però il modello appena creato:
+
+```{r}
+regmulti2 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza37)
+summary(regmulti2)
+
+AIC(regmulti2)
 
 ```
 
-Questo modello ha un indice $R^2=80,62\%$ che è sicuramente sufficientemente elevato per poter essere considerato un buon modello. L'AIC corrispondente è di 580.8, che è un valore accettabile e inferiore rispetto a ciò che si era ottenuto con il modello formulato tramite la funzione stepAIC originariamente.
+Seppur il valore dell'AIC scenda (571.2), il modulo di $R^2$ diminuisce (79.01%). Sembra dunque che il modello sia "*peggiorato*".
 
-Si prova dunque ora a riapplicare la funzione stepAIC al modello *regmulti1* appena formulato, per vedere se ne è ancora migliorabile la stima
+Si applica dunque la funzione stepAIC al modello *regmulti2* appena formulato, per vedere se in realtà ne è ancora migliorabile la stima
 
 ```{r}
-regmultiAIC <- stepAIC(regmulti1)
+regmultiAIC <- stepAIC(regmulti2)
 summary(regmultiAIC)
 AIC(regmultiAIC)
 ```
 
-\'E aumentato leggermente l' $R^2$ che ora risulta essere pari all'80,98% e l'AIC è sceso a 578,96, che è un valore migliore rispetto a quello ottenuto con il modello *regmulti1*.
-
-Un altro modello che restituisce i medesimi parametri appena citati è questo sottostante, che sembra essere un buon compromesso tra bontà del fit e complessità del modello derivante dal numero di variabili e dal loro prodotto.
-
-```{r}
-
-test2 <- lm(mort ~ prec + log(nox) + educ*hous + educ*nonw*poor, data = Pollution)
-summary(test2)
-AIC(test2)
-
-```
+È aumentato leggermente l' $R^2$ che ora risulta essere pari all'80.65% e l'AIC è sceso a 562.3, che è un valore leggermente migliore rispetto a quello ottenuto con il modello *mod5* .
