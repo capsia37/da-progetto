@@ -129,7 +129,7 @@ univarAnalysis <- function(conf, df) {
 out <- sapply(PollutionUnivConf$variables, univarAnalysis, df = Pollution)
 ```
 
-## ANALISI BIVARIATA DEL DATASET "House prices"
+## ANALISI BIVARIATA DEL DATASET
 
 ```{r}
 PollutionBivConf <- read_yaml("pollution-biv.config.yaml")
