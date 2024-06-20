@@ -18,7 +18,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Progetto di Data Analytics
 
-Con la presente analisi si vuole sviluppare un modello predittivo per la variabile mort.
+L'analisi che si vuole effettuare concerne un dataset che descrive dati riguardanti l'inquinamento dell'aria (pollution) e il tasso di mortalità in 60 aree metropolitane negli Stati Uniti d'America nell'anno 1960.
+
+Il dataset deriva da una rivista trimestrale di Statistica per le Scienze Fisiche, Chimiche e Ingegneristiche che viene pubblicata dall'*American Society for Quality* e dall'*American Statistical Association*, denominata *Technometrics*.
+
+Più precisamente nel vol. 15 (463-482), in un articolo intitolato "*Instabilities of regression estimates relating air pollution to mortality*" che ha come autori McDonald G.C. and Schwing R.C. nel 1973.
+
+L'obiettivo della presente analisi vuoleè quello di sviscerare le relazioni che sono presenti tra le variabili ambientali e la variabile target del tasso di mortalità per concludere con lo sviluppo di un modello predittivo per la variabile output (mort).
 
 ### Descrizione delle variabili presenti
 
