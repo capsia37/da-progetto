@@ -195,7 +195,7 @@ out <- sapply(PollutionBivConf$variables, bivarAnalysis, df = Pollution)
 
 Le varie analisi bivariate per le singole variabili evidenziano come ci sia un dato che risulta sempre anomalo (in 12 variabili su 16) quando viene valutata la Cook's Distance. Questo è l'osservazione 37. Si decide dunque di procedere effettuando un ricalcolo dei valori degli indici $R^2$-Adjusted e p-value delle singole variabili, utilizzando il medesimo dataset epurato però della suddetta rilevazione.
 
-```{r}
+```{r, results='asis'}
 senza37 <- Pollution[-37, ]
 
 
