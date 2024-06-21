@@ -198,11 +198,10 @@ out <- sapply(PollutionBivConf$variables, bivarAnalysis, df = Pollution)
 
 ### Considerazioni
 
-Le varie analisi bivariate per le singole variabili evidenziano come ci sia un dato che risulta sempre anomalo (in 12 variabili su 16) quando viene valutata la Cook's Distance. Questo è l'osservazione 37. Si decide dunque di procedere effettuando un ricalcolo dei valori degli indici $R^2$-Adjusted e p-value delle singole variabili, utilizzando il medesimo dataset epurato però della suddetta rilevazione.
+Le varie analisi bivariate per le singole variabili evidenziano come ci sia un dato che risulta sempre anomalo (in 12 variabili su 16) quando viene valutata la distanza di Cook. Questo è l'osservazione 37. Si decide dunque di procedere effettuando un ricalcolo dei valori degli indici $R^2$-Adjusted e p-value delle singole variabili, utilizzando il medesimo dataset epurato però della suddetta rilevazione.
 
 ```{r, results='asis'}
 senza37 <- Pollution[-37, ]
-
 
 bivarAnalysisLight <- function(conf, df) {
   cat("\n\n##", conf$colname, "\n")
@@ -224,7 +223,6 @@ bivarAnalysisLight <- function(conf, df) {
   }
 
 }
-
 
 out <- sapply(PollutionBivConf$variables, bivarAnalysisLight, df = senza37)
 ```
@@ -329,7 +327,7 @@ $$
 
 Abbiamo visto però dall'analisi bivariata senza l'osservazione 37 che la variabile *so2* dovrebbe essere di fondamentale importanza per contributo al modello ma nel fit appena presentato è stata scartata al primo step.
 
-Proviamo dunque a vedere se, considerando il nuovo dataset *senza37* e l'ultimo modello fittante proposto, la suddetta variabile ci porta dei valori migliori in termini di $R^2$-adjusted ed AIC.
+Proviamo dunque a vedere se, considerando il nuovo dataset *senza37* e l'ultimo modello proposto, la suddetta variabile ci porta dei valori migliori in termini di $R^2$-adjusted ed AIC.
 
 ```{r}
 mod5 <- lm(mort ~ prec + educ + hous + nonw + poor + log(so2)+ log(nox) + hous*educ + poor*nonw*educ, data = senza37)
@@ -373,7 +371,7 @@ $$
 
 Nonostante si possa reputare una buona supposizione, il modello non sembra confermarla, o meglio, sembra essercene uno migliore, che è quello visto in precedenza.
 
-#### Secondo modello senza 37 
+#### Secondo modello senza 37
 
 Si prova ora a cambiare il dataset utilizzando quello senza l'osservazione numero 37, mantenendo però il modello appena creato:
 

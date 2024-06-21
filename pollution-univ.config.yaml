@@ -39,7 +39,7 @@ variables:
   - colname: "educ"
     run: ["doboxplot","dohist","dodensity","doqqplot"]
     desc: |
-      Dall'istogramma si nota che dda 9 a 11,5 anni la distribuzione cresce notevolmente per poi diminuire \
+      Dall'istogramma si nota che da 9 a 11,5 anni la distribuzione cresce notevolmente per poi diminuire \
       Dal boxplot e dal summary si osserva che il 50% della distribuzione si trova tra 10,4 e 11,5 con la mediana in 11,05. \
       Dal qqplot si nota che non segue l'andamento di una gaussiana. \
       Dato l'indice di skewness si osserva una leggera asimmetria negativa.
