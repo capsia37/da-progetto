@@ -323,7 +323,7 @@ $$
 + \beta_8\cdot\text{nonw}*\text{poor} +  \beta_9\cdot\text{educ}*\text{poor} +  \beta_{10}\cdot\text{educ}*\text{nonw}+\beta_{11}\cdot\text{educ}*\text{nonw}*\text{poor} 
 $$
 
-#### Primo modello senza osservazione 37
+#### Primo modello (senza osservazione 37)
 
 Abbiamo visto però dall'analisi bivariata senza l'osservazione 37 che la variabile *so2* dovrebbe essere di fondamentale importanza per contributo al modello ma nel fit appena presentato è stata scartata al primo step.
 
@@ -371,7 +371,7 @@ $$
 
 Nonostante si possa reputare una buona supposizione, il modello non sembra confermarla, o meglio, sembra essercene uno migliore, che è quello visto in precedenza.
 
-#### Secondo modello senza 37
+#### Secondo modello (senza osservazione 37)
 
 Si prova ora a cambiare il dataset utilizzando quello senza l'osservazione numero 37, mantenendo però il modello appena creato:
 
@@ -385,7 +385,7 @@ AIC(regmulti2)
 
 Seppur il valore dell'AIC scenda (571.2), il modulo di $R^2$ diminuisce (79.01%). Sembra dunque che il modello sia "*peggiorato*".
 
-#### Secondo modello StepAIC senza 37
+#### Terzo modello (senza osservazione 37)
 
 Si applica dunque la funzione stepAIC al modello *regmulti2* appena formulato, per vedere se in realtà ne è ancora migliorabile la stima
 
@@ -416,7 +416,7 @@ Tra tutti il migliore sembrerebbe essere l'ultimo modello proposto, che è stato
 |      Primo Modello senza 37      |    80.01%    | 565.76 |
 |         Secondo Modello          |    81.19%    | 581.69 |
 |     Secondo Modello senza 37     |    79.01%    | 571.25 |
-| Secondo Modello StepAIC senza 37 |    80.65%    | 562.33 |
+|      Terzo Modello senza 37      |    80.65%    | 562.33 |
 
 : Tabella riassuntiva
 
@@ -428,6 +428,6 @@ La scelta del miglior modello dipende dall'obiettivo specifico:
 
 -   Se l'obiettivo è minimizzare la complessità del modello mantenendo una buona qualità dell'adattamento (AIC), il Modello StepAIC originale è il migliore.
 
-In generale, una combinazione di entrambi i criteri è spesso considerata. Se si desidera un equilibrio tra un buon $R^2$ aggiustato e un basso AIC, si potrebbe considerare il Secondo Modello StepAIC senza 37, che ha un $R^2$ buon aggiustato (80.65%) e un AIC relativamente basso (562.33).
+In generale, una combinazione di entrambi i criteri è spesso considerata. Se si desidera un equilibrio tra un buon $R^2$ aggiustato e un basso AIC, si potrebbe considerare il Terzo Modello, che ha un buon $R^2$ aggiustato (80.65%) e un AIC relativamente basso (562.33).
 
-Ovviamente si è consci che cìè un aumento della complessità del modello tra il primo primo proposto. Si vede anche che non è proporzionale la crescita dell' $R^2$ e dell'AIC. Per quanto dunque il modello trovato spieghi le variabili si può supporre anche che possa essere overfittato (un grande aumento dell'AIC deriva probabilmente dall'avere incluso molti parametri aggiuntivi), ovvero, spiega bene il presente dataset ma potrebbe non generalizzare bene nuovi dati,
+Ovviamente si è consci che c'è un aumento della complessità del modello rispetto al primo modello proposto. Si vede anche che non è proporzionale la crescita dell' $R^2$ e dell'AIC. Per quanto dunque il modello trovato spieghi le variabili si può supporre anche che possa essere overfittato (un grande aumento dell'AIC deriva probabilmente dall'avere incluso molti parametri aggiuntivi), ovvero, spiega bene il presente dataset ma potrebbe non generalizzare bene nuovi dati.
