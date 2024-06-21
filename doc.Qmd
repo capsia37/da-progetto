@@ -267,7 +267,11 @@ summary(a)
 
 L'indice $R^2$ del modello è pari a 71.39%
 
-L'AIC risultante è di 429.63, con variabili considerate finali $$\text{mort} \sim  \beta_0+ \beta_1\cdot \text{prec} + \beta_2\cdot \text{jant} + \beta_3\cdot\text{jult} + \beta_4\cdot\text{ovr65} + \beta_5\cdot\text{popn} + \beta_6\cdot \text{educ} + \beta_7\cdot \text{nonw} + \beta_8\cdot \text{hc} + \beta_9\cdot\text{nox}$$
+L'AIC risultante è di 429.63, con variabili considerate finali $$\text{mort} \sim  \beta_0+ \beta_1\cdot \text{prec} + \beta_2\cdot \text{jant} + \beta_3\cdot\text{jult} + \beta_4\cdot\text{ovr65} + \beta_5\cdot\text{popn} + \beta_6\cdot \text{educ} +$$
+
+$$
++ \beta_7\cdot \text{nonw} + \beta_8\cdot \text{hc} + \beta_9\cdot\text{nox}
+$$
 
 ### Primo modello
 
@@ -315,7 +319,11 @@ AIC(mod4)
 
 Otteniamo così un modello con l'Adjusted R-squared di 80.98% e l'AIC di 578.9574.
 
-$$ \text{mort} \sim \beta_0 + \beta_1\cdot \text{prec} + \beta_2\cdot\text{educ}+ \beta_3\cdot\text{hous}+\beta_4\cdot\text{nonw}+\beta_5\cdot\text{poor}+\beta_6\cdot \log(\text{nox}) + \beta_7\cdot\text{educ}*\text{hous} +  \beta_8\cdot\text{nonw}*\text{poor} +  \beta_9\cdot\text{educ}*\text{poor} +  \beta_{10}\cdot\text{educ}*\text{nonw}+\beta_{11}\cdot\text{educ}*\text{nonw}*\text{poor} $$
+$$ \text{mort} \sim \beta_0 + \beta_1\cdot \text{prec} + \beta_2\cdot\text{educ}+ \beta_3\cdot\text{hous}+\beta_4\cdot\text{nonw}+\beta_5\cdot\text{poor}+\beta_6\cdot \log(\text{nox}) +  \beta_7\cdot\text{educ}*\text{hous} + $$
+
+$$
++ \beta_8\cdot\text{nonw}*\text{poor} +  \beta_9\cdot\text{educ}*\text{poor} +  \beta_{10}\cdot\text{educ}*\text{nonw}+\beta_{11}\cdot\text{educ}*\text{nonw}*\text{poor} 
+$$
 
 #### Primo modello senza osservazione 37
 
