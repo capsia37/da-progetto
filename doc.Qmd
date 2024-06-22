@@ -570,4 +570,12 @@ In generale, una combinazione di entrambi i criteri è spesso considerata.
 
 Se si desidera un equilibrio tra un buon $R^2$ aggiustato e un basso AIC, si potrebbe considerare il Terzo Modello, che ha un buon $R^2$ aggiustato (85.15%) e un AIC relativamente basso (525.99).
 
+$$
+\text{mort}\sim \beta_0+\beta_1\cdot\text{educ}+\beta_2\cdot\text{nonw}+\beta_3\cdot \text{poor}+\beta_4\cdot\text{prec}+\beta_5\cdot\log(\text{nox})+\beta_6\cdot\log(\text{so2})+
+$$
+
+$$
++\beta_7\cdot \text{hous}+\beta_8\cdot\log(\text{nox})*\log(\text{so2})+\beta_9\cdot\text{nonw}*\text{poor}+\beta_{10}\cdot\text{euc}*\text{hous}
+$$
+
 Ovviamente si è consci che c'è un aumento della complessità del modello rispetto al primo modello proposto. Si vede anche che non è proporzionale la crescita dell' $R^2$ e dell'AIC. Per quanto dunque il modello trovato spieghi le variabili si può supporre anche che possa essere overfittato (un grande aumento dell'AIC deriva probabilmente dall'avere incluso molti parametri aggiuntivi), ovvero, spiega bene il presente dataset ma potrebbe non generalizzare bene nuovi dati.
