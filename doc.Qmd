@@ -33,7 +33,7 @@ L'obiettivo della presente analisi è quello di sviscerare le relazioni che sono
 
 ### Descrizione delle variabili presenti
 
-Le variabili all'interno del dataset proposto sono 16
+Le variabili all'interno del dataset proposto sono 16, tutte di tipo quantitativo:
 
 -   PREC ➜ Precipitazioni medie annue in pollici
 
