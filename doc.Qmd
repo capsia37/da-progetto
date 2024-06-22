@@ -563,13 +563,13 @@ Si nota in questi ultimi modelli che ci sono stati dei miglioramenti sostanziali
 
 La scelta del miglior modello dipende dall'obiettivo specifico:
 
--   Se l'obiettivo è massimizzare la capacità del modello di spiegare la variabilità dei dati, il Secondo Modello è il migliore.
+-   Se l'obiettivo è massimizzare la capacità del modello di spiegare la variabilità dei dati, il Terzo Modello è il migliore.
 
 -   Se l'obiettivo è minimizzare la complessità del modello mantenendo una buona qualità dell'adattamento (AIC), il Modello StepAIC originale è il migliore.
 
 In generale, una combinazione di entrambi i criteri è spesso considerata.
 
-Se si desidera un equilibrio tra un buon $R^2$ aggiustato e un basso AIC, si potrebbe considerare il Terzo Modello, che ha un buon $R^2$ aggiustato (85.15%) e un AIC relativamente basso (525.99).
+Se si desidera un equilibrio tra un buon $R^2$ aggiustato e un basso AIC che però è stato soggetto ad una scrematura dei dati, si potrebbe considerare il Terzo Modello, che ha un buon $R^2$ aggiustato (85.15%) e un AIC relativamente basso (525.99).
 
 $$
 \text{mort}\sim \beta_0+\beta_1\cdot\text{educ}+\beta_2\cdot\text{nonw}+\beta_3\cdot \text{poor}+\beta_4\cdot\text{prec}+\beta_5\cdot\log(\text{nox})+\beta_6\cdot\log(\text{so2})+
