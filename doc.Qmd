@@ -33,7 +33,7 @@ L'obiettivo della presente analisi è quello di sviscerare le relazioni che sono
 
 ### Descrizione delle variabili presenti
 
-Le variabili all'interno del dataset proposto sono 16, tutte di tipo quantitativo:
+Le variabili all'interno del dataset proposto sono 16
 
 -   PREC ➜ Precipitazioni medie annue in pollici
 
@@ -261,9 +261,6 @@ a <- stepAIC(lreg, direction = "both")
 
 ```{r}
 summary(a)
-par(mfrow = c(2, 2))
-plot(a, which = c(1,2,4,5))
-par(mfrow = c(1, 1))
 ```
 
 L'indice $R^2$ del modello è pari a 71.39%
@@ -281,10 +278,7 @@ Considerando le variabili *prec*, *popn*, *educ*, *hous*, *nonw*, *poor, log(so2
 ```{r}
 mod1 <- lm(mort ~ prec + popn + educ + hous + nonw + log(so2) + poor + log(nox), data = Pollution)
 summary(mod1)
-AIC(mod1)
-par(mfrow = c(2, 2))
-plot(mod1, which = c(1,2,4,5))
-par(mfrow = c(1, 1))
+AIC(mod1)                        
 ```
 
 Si nota che questo modello ha un Adjusted R-squared di 67.41% e l'AIC di 608.9.
@@ -297,9 +291,6 @@ Ed inoltre aggiungiamo $\text{wwdrk}*\text{educ}$ , in quanto sono abbastanza co
 mod2 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + wwdrk*educ, data = Pollution)
 summary(mod2)
 AIC(mod2)
-par(mfrow = c(2, 2))
-plot(mod2, which = c(1,2,4,5))
-par(mfrow = c(1, 1))
 ```
 
 In questo modo l'Adjusted R-squared è arrivato a 0.6825 e l'AIC a 607.333.
@@ -312,9 +303,6 @@ Sempre guardando la correlazione, proviamo ad aggiungere $\text{hous}*\text{educ
 mod3 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + hous*educ + poor*nonw + poor*hous + ovr65*nonw, data = Pollution)
 summary(mod3)
 AIC(mod3)
-par(mfrow = c(2, 2))
-plot(mod3, which = c(1,2,4,5))
-par(mfrow = c(1, 1))
 ```
 
 Ma guardando i p-value, osserviamo che $\text{educ}*\text{hous}$ contribuisce, come anche $\text{poor}*\text{nonw}$ ma potrebbe essere migliorato, mentre $\text{poor}*\text{hous}$ e $\text{ovr65}*\text{nonw}$ , presentano valori del p-value elevati e dunque non apportando alcuna modifica sostanziale, si decide di eliminarli.
@@ -325,6 +313,7 @@ Per migliorare $\text{poor}*\text{nonw}$ proviamo ad aggiungere la variabile $\t
 mod4 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + hous*educ + poor*nonw*educ, data = Pollution)
 summary(mod4)
 AIC(mod4)
+
 par(mfrow = c(2, 2))
 plot(mod4, which = c(1,2,4,5))
 par(mfrow = c(1, 1))
@@ -348,6 +337,7 @@ Proviamo dunque a vedere se, considerando il nuovo dataset *senza37* e l'ultimo 
 mod5 <- lm(mort ~ prec + educ + hous + nonw + poor + log(so2)+ log(nox) + hous*educ + poor*nonw*educ, data = senza37)
 summary(mod5)
 AIC(mod5)
+
 par(mfrow = c(2, 2))
 plot(mod5, which = c(1,2,4,5))
 par(mfrow = c(1, 1))
@@ -361,6 +351,39 @@ $$
 + \beta_8\cdot\text{nonw}*\text{poor} +  \beta_9\cdot\text{educ}*\text{poor} +  \beta_{10}\cdot\text{educ}*\text{nonw}+\beta_{11}\cdot\text{educ}*\text{nonw}*\text{poor}
 $$
 
+Guardando però i residui sembra esserci un'altra misurazione anomala, la numero 28. Si prova ora ad analizzare rimuovendo anche la suddetta
+
+##### Primo modello senza osservazione 37 e 28
+
+Per quanto riguarda il primo modello si ottiene:
+
+```{r}
+#Primo modello 
+mod4 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + hous*educ + poor*nonw*educ, data = senza3728) 
+summary(mod4) 
+AIC(mod4)  
+par(mfrow = c(2, 2)) 
+plot(mod4, which = c(1,2,4,5)) 
+par(mfrow = c(1, 1))
+```
+
+Si nota dai residui che ora l'osservazione 11 si discosterebbe dalle altre guardando la distanza di Cook; si procede dunque analizzando il modello togliendo l'osservazione 11:
+
+##### Primo modello senza osservazione 37, 28 e 11
+
+```{r}
+senza372811 <- Pollution[c(-11,-28,-37), ]  
+
+#Primo modello 
+
+mod4 <- lm(mort ~ prec + educ + hous + nonw + poor + log(nox) + hous*educ + poor*nonw*educ, data = senza372811) 
+summary(mod4) 
+AIC(mod4) 
+par(mfrow = c(2, 2)) 
+plot(mod4, which = c(1,2,4,5)) 
+par(mfrow = c(1, 1))
+```
+
 ### Secondo modello
 
 Facendo alcune considerazioni aggiuntive però, si suppone che l'inquinamento dei gas nell'atmosfera provochi ad esempio piogge acide, evento atmosferisco che essendo dannoso per l'organismo, potrebbe comportare un aumento della mortalità.
@@ -372,6 +395,7 @@ regmulti1 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*n
 summary(regmulti1)
 
 AIC(regmulti1)
+
 par(mfrow = c(2, 2))
 plot(regmulti1, which = c(1,2,4,5))
 par(mfrow = c(1, 1))
@@ -401,14 +425,46 @@ regmulti2 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*n
 summary(regmulti2)
 
 AIC(regmulti2)
+
 par(mfrow = c(2, 2))
 plot(regmulti2, which = c(1,2,4,5))
 par(mfrow = c(1, 1))
+
 ```
 
 Seppur il valore dell'AIC scenda (571.2), il modulo di $R^2$ diminuisce (79.01%). Sembra dunque che il modello sia "*peggiorato*".
 
-#### Terzo modello (senza osservazione 37)
+Guardando però i residui sembra esserci un'altra misurazione anomala, la numero 28. Si prova ora ad analizzare rimuovendo anche la suddetta.
+
+##### Secondo modello senza osservazione 37 e 28
+
+```{r}
+#Secondo modello 
+regmulti2 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza3728) 
+summary(regmulti2)  
+AIC(regmulti2)  
+par(mfrow = c(2, 2)) 
+plot(regmulti2, which = c(1,2,4,5)) 
+par(mfrow = c(1, 1))
+```
+
+Si nota dai residui che ora l'osservazione 11 si discosterebbe dalle altre guardando la distanza di Cook; si procede dunque analizzando il modello togliendo l'osservazione 11:
+
+##### Secondo modello senza osservazione 37, 28 e 11
+
+```{r}
+#Secondo modello 
+regmulti2 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza372811) 
+summary(regmulti2)  
+AIC(regmulti2)
+par(mfrow = c(2, 2)) 
+plot(regmulti2, which = c(1,2,4,5)) 
+par(mfrow = c(1, 1))
+```
+
+##### 
+
+### Terzo modello (senza osservazione 37)
 
 Si applica dunque la funzione stepAIC al modello *regmulti2* appena formulato, per vedere se in realtà ne è ancora migliorabile la stima
 
@@ -416,9 +472,10 @@ Si applica dunque la funzione stepAIC al modello *regmulti2* appena formulato, p
 regmultiAIC <- stepAIC(regmulti2)
 summary(regmultiAIC)
 AIC(regmultiAIC)
-par(mfrow = c(2, 2))
-plot(regmultiAIC, which = c(1,2,4,5))
+par(mfrow = c(2, 2)) 
+plot(regmultiAIC, which = c(1,2,4,5)) 
 par(mfrow = c(1, 1))
+
 ```
 
 È aumentato leggermente l' $R^2$ che ora risulta essere pari all'80.65% e l'AIC è sceso a 562.3, che è un valore leggermente migliore rispetto a quello ottenuto con il modello *mod5* .
@@ -429,20 +486,75 @@ $$
 
 $$ + \beta_7\cdot \text{hous}  + \beta_8\cdot \text{educ}*\text{poor} + \beta_9\cdot \text{nonw}*\text{poor} + \beta_{10}\cdot \text{educ}$$
 
-Tra tutti il migliore sembrerebbe essere l'ultimo modello proposto, che è stato ottenuto eliminando l'osservazione 37
+Tra tutti il migliore sembrerebbe essere l'ultimo modello proposto, che è stato ottenuto eliminando l'osservazione 37.
 
-|           $$Modello$$            |      $$      
-                                     R^2-Adjusted 
-                                         $$       |   $$   
-                                                     AIC   
-                                                     $$    |
-|:--------------------------------:|:------------:|:------:|
-|    Modello StepAIC originale     |    71.39%    | 429.63 |
-|          Primo Modello           |    80.98%    | 578.96 |
-|      Primo Modello senza 37      |    80.01%    | 565.76 |
-|         Secondo Modello          |    81.19%    | 581.69 |
-|     Secondo Modello senza 37     |    79.01%    | 571.25 |
-|      Terzo Modello senza 37      |    80.65%    | 562.33 |
+Dai grafici della Distanza di Cook dei vari modelli, si evidenzia un altro valore ricorrente che sembrerebbe essere un outlier. Si decide di rieseguire il calcolo dei modelli togliendo questa ulteriore osservazione.
+
+```{r}
+senza3728 <- Pollution[c(-28,-37), ]
+```
+
+##### Terzo modello senza osservazione 37 e 28
+
+```{r}
+#Secondo modello 
+regmulti2 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza3728) 
+summary(regmulti2)  
+AIC(regmulti2)
+par(mfrow = c(2, 2))
+plot(regmulti2, which = c(1,2,4,5))
+par(mfrow = c(1, 1))
+```
+
+Si nota dai residui che ora l'osservazione 11 si discosterebbe dalle altre guardando la distanza di Cook; si procede dunque analizzando il modello togliendo l'osservazione 11:
+
+##### Terzo modello senza osservazione 37, 28 e 11
+
+```{r}
+regmultiAIC <- stepAIC(regmulti2)
+summary(regmultiAIC)
+AIC(regmultiAIC)
+```
+
+Si nota in questi ultimi modelli che ci sono stati dei miglioramenti sostanziali non tanto in termini di $R^2$ , bensì di AIC.
+
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| $$Modello$$                        | $$                                                                                                               | $$                                                                                                                                                                                                                                                                 |
+|                                    |                                                                                                  R^2-Adjusted    |                                                                                                                                                                                                                                                           AIC      |
+|                                    |                                                                                                           $$     |                                                                                                                                                                                                                                                             $$     |
++:==================================:+:================================================================================================================:+:==================================================================================================================================================================================================================================================================:+
+| Modello StepAIC originale          | 71.39%                                                                                                           | 429.63                                                                                                                                                                                                                                                             |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Primo Modello                      | 80.98%                                                                                                           | 578.96                                                                                                                                                                                                                                                             |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Primo Modello senza 37             | 80.01%                                                                                                           | 565.76                                                                                                                                                                                                                                                             |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Primo Modello                      | 82.72%                                                                                                           | 545.52                                                                                                                                                                                                                                                             |
+|                                    |                                                                                                                  |                                                                                                                                                                                                                                                                    |
+| senza 37, 28                       |                                                                                                                  |                                                                                                                                                                                                                                                                    |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Primo Modello**                  | **83.12%**                                                                                                       | **534.07**                                                                                                                                                                                                                                                         |
+|                                    |                                                                                                                  |                                                                                                                                                                                                                                                                    |
+| **senza 37, 28, 11**               |                                                                                                                  |                                                                                                                                                                                                                                                                    |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Secondo Modello                    | 81.19%                                                                                                           | 581.69                                                                                                                                                                                                                                                             |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Secondo Modello senza 37           | 79.01%                                                                                                           | 571.25                                                                                                                                                                                                                                                             |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Secondo Modello                    | 82.88 %                                                                                                          | 548.29                                                                                                                                                                                                                                                             |
+|                                    |                                                                                                                  |                                                                                                                                                                                                                                                                    |
+| senza 37, 28                       |                                                                                                                  |                                                                                                                                                                                                                                                                    |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Secondo Modello**                | **83.59%**                                                                                                       | **535.75**                                                                                                                                                                                                                                                         |
+|                                    |                                                                                                                  |                                                                                                                                                                                                                                                                    |
+| **senza 37, 28, 11**               |                                                                                                                  |                                                                                                                                                                                                                                                                    |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Terzo Modello senza 37             | 80.65%                                                                                                           | 562.33                                                                                                                                                                                                                                                             |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Terzo Modello senza 37, 28         | 82.88                                                                                                            | 548.29                                                                                                                                                                                                                                                             |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Terzo Modello senza 37, 28, 11** | **85.15%**                                                                                                       | **525.99**                                                                                                                                                                                                                                                         |
++------------------------------------+------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 : Tabella riassuntiva
 
@@ -454,6 +566,8 @@ La scelta del miglior modello dipende dall'obiettivo specifico:
 
 -   Se l'obiettivo è minimizzare la complessità del modello mantenendo una buona qualità dell'adattamento (AIC), il Modello StepAIC originale è il migliore.
 
-In generale, una combinazione di entrambi i criteri è spesso considerata. Se si desidera un equilibrio tra un buon $R^2$ aggiustato e un basso AIC, si potrebbe considerare il Terzo Modello, che ha un buon $R^2$ aggiustato (80.65%) e un AIC relativamente basso (562.33).
+In generale, una combinazione di entrambi i criteri è spesso considerata.
+
+Se si desidera un equilibrio tra un buon $R^2$ aggiustato e un basso AIC, si potrebbe considerare il Terzo Modello, che ha un buon $R^2$ aggiustato (85.15%) e un AIC relativamente basso (525.99).
 
 Ovviamente si è consci che c'è un aumento della complessità del modello rispetto al primo modello proposto. Si vede anche che non è proporzionale la crescita dell' $R^2$ e dell'AIC. Per quanto dunque il modello trovato spieghi le variabili si può supporre anche che possa essere overfittato (un grande aumento dell'AIC deriva probabilmente dall'avere incluso molti parametri aggiuntivi), ovvero, spiega bene il presente dataset ma potrebbe non generalizzare bene nuovi dati.
