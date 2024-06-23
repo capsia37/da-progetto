@@ -424,10 +424,10 @@ Guardando però i residui sembra esserci un'altra misurazione anomala, la numero
 ```{r}
 #Secondo modello 
 regmulti3 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza3728) 
-summary(regmulti2)  
-AIC(regmulti2)  
+summary(regmulti3)  
+AIC(regmulti3)  
 par(mfrow = c(2, 2)) 
-plot(regmulti2, which = c(1,2,4,5)) 
+plot(regmulti3, which = c(1,2,4,5)) 
 par(mfrow = c(1, 1))
 ```
 
@@ -438,10 +438,10 @@ Si nota dai residui che ora l'osservazione 11 si discosterebbe dalle altre guard
 ```{r}
 #Secondo modello 
 regmulti4 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza372811) 
-summary(regmulti2)  
-AIC(regmulti2)
+summary(regmulti4)  
+AIC(regmulti4)
 par(mfrow = c(2, 2)) 
-plot(regmulti2, which = c(1,2,4,5)) 
+plot(regmulti4, which = c(1,2,4,5)) 
 par(mfrow = c(1, 1))
 ```
 
