@@ -528,7 +528,7 @@ Si nota in questi ultimi modelli che ci sono stati dei miglioramenti sostanziali
 
 ### Conclusione
 
-Considerando entrambe le metriche, il **Terzo Modello senza 37, 28, 11** sembra essere il migliore. Questo modello presenta il più alto R^2^ Adjusted (85.15%) e il più basso AIC (525.99), indicando un eccellente equilibrio tra capacità di spiegazione della variabilità dei dati e complessità del modello.
+Valutando i risultati ottenuti, il **Terzo Modello senza 37, 28, 11** sembra essere il migliore. Questo modello presenta il più alto R^2^ Adjusted (85.15%) e il più basso AIC (525.99), indicando un eccellente equilibrio tra capacità di spiegazione della variabilità dei dati e complessità del modello.
 
 $$ \text{mort}\sim \beta_0+\beta_1\cdot\text{educ}+\beta_2\cdot\text{nonw}+\beta_3\cdot \text{poor}+\beta_4\cdot\text{prec}+\beta_5\cdot\log(\text{nox})+\beta_6\cdot\log(\text{so2})+ $$
 
