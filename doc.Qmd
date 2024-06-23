@@ -498,8 +498,6 @@ plot(regmulti2, which = c(1,2,4,5))
 par(mfrow = c(1, 1))
 ```
 
-Si nota dai residui che ora l'osservazione 11 si discosterebbe dalle altre guardando la distanza di Cook; si procede dunque analizzando il modello togliendo l'osservazione 11:
-
 ##### Terzo modello senza osservazione 37, 28 e 11
 
 ```{r}
