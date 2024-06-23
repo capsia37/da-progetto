@@ -87,10 +87,6 @@ univarAnalysis <- function(conf, df) {
     df[, conf$colname] <- log(df[, conf$colname])
   }
   cat("\n\n Numero di NA: ", sum(is.na(df[, conf$colname]), na.rm = T), "\n\n")
-  if ("filterzeros" %in% conf$run) {
-    cat("\n\n Numero di zeri rimossi: ", sum(df[, conf$colname] == 0, na.rm = T), "\n\n")
-    df <- df[df[, conf$colname] != 0,]
-  }
   if (sum(
       as.logical("dobarplot" %in% conf$run), 
       as.logical("doboxplot" %in% conf$run),
@@ -153,24 +149,6 @@ bivarAnalysis <- function(conf, df) {
   par(mfrow = c(1, 1))
   if ("uselog" %in% conf$run) {
     df[, conf$colname] <- log(df[, conf$colname])
-  }
-  cat("\n\n Numero di NA: ", sum(is.na(df[, conf$colname]), na.rm = T), "\n\n")
-  if ("filterzeros" %in% conf$run) {
-    cat("\n\n Numero di zeri rimossi: ", sum(df[, conf$colname] == 0, na.rm = T), "\n\n")
-    df <- df[df[, conf$colname] != 0,]
-  }
-  if ("docmpboxplot" %in% conf$run) {
-    boxplot(df[, conf$tgcol]~df[, conf$colname], 
-            xlab = conf$colname, ylab = conf$tgcol)
-  }
-  if ("doanova" %in% conf$run) {
-    anova_obj <- aov(df[, conf$tgcol]~df[, conf$colname])
-    print(kable(summary(anova_obj)[1][[1]], row.names = FALSE))
-    if ("doetasq" %in% conf$run) {
-      etasq_obj <- summary(anova_obj)[1][[1]][[2]][1]/(summary(anova_obj)[1][[1]][[2]][2]+
-                                                         summary(anova_obj)[1][[1]][[2]][1])
-      cat("\n\n Eta squared: ", etasq_obj, "\n\n")
-    }
   }
   if ("doscatterplot" %in% conf$run) {
     plot(df[, conf$colname], df[, conf$tgcol], xlab = conf$colname, 
@@ -535,7 +513,7 @@ Si nota in questi ultimi modelli che ci sono stati dei miglioramenti sostanziali
 ### Riassunto dei Modelli
 
 |               Modello                |    R^2^    |    AIC     |                                                                        Osservazioni                                                                        |
-|:------------------:|:-----------:|:-----------:|:------------------------:|
+|:----------------:|:--------------:|:--------------:|:---------------------:|
 |      Modello StepAIC originale       |   71.39%   |   612.06   |                          Questo modello serve come base di confronto per valutare i miglioramenti ottenuti con gli altri modelli.                          |
 |            Primo Modello             |   80.98%   |   578.96   |                           Ha un notevole miglioramento rispetto al modello originale sia in termini di R^2^ Adjusted che di AIC.                           |
 |        Primo Modello senza 37        |   80.01%   |   565.76   | Una leggera riduzione nel R^2^ Adjusted, ma una significativa riduzione nell'AIC, indicando un modello più semplice con una buona qualità di adattamento.  |
