@@ -21,7 +21,7 @@ library(MASS)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Progetto di Data Analytics
+## Introduzione al dataset
 
 L'analisi che si vuole effettuare concerne un dataset che descrive dati riguardanti l'inquinamento dell'aria (pollution) e il tasso di mortalità in 60 aree metropolitane negli Stati Uniti d'America nell'anno 1960.
 
