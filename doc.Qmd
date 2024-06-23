@@ -482,28 +482,33 @@ $$
 
 $$ + \beta_7\cdot \text{hous}  + \beta_8\cdot \text{educ}*\text{poor} + \beta_9\cdot \text{nonw}*\text{poor} + \beta_{10}\cdot \text{educ}$$
 
-Tra tutti il migliore sembrerebbe essere l'ultimo modello proposto, che è stato ottenuto eliminando l'osservazione 37.
-
-Dai grafici della Distanza di Cook dei vari modelli, si evidenzia un altro valore ricorrente che sembrerebbe essere un outlier. Si decide di rieseguire il calcolo dei modelli togliendo questa ulteriore osservazione.
+Tra tutti il migliore sembrerebbe essere l'ultimo modello proposto guardando l'AIC, che è stato ottenuto eliminando l'osservazione 37. 
+ 
+Dai grafici della Distanza di Cook però si evidenzia un altro valore ricorrente che sembrerebbe essere un outlier (28). Si decide di rieseguire il calcolo dei modelli togliendo questa ulteriore osservazione. 
+ 
 
 ##### Terzo modello senza osservazione 37 e 28
 
 ```{r}
-#Secondo modello 
-regmultiAIC2 <- stepAIC(regmulti3)
-summary(regmultiAIC2)
-AIC(regmultiAIC2)
-par(mfrow = c(2, 2))
-plot(regmulti2, which = c(1,2,4,5))
-par(mfrow = c(1, 1))
+#Secondo modello senza 37 e 28
+regmultiAIC2 <- stepAIC(lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza3728) ) 
+summary(regmultiAIC2) 
+AIC(regmultiAIC2) 
+par(mfrow = c(2, 2)) 
+plot(regmultiAIC2, which = c(1,2,4,5)) 
+par(mfrow = c(1, 1)) 
 ```
 
 ##### Terzo modello senza osservazione 37, 28 e 11
 
 ```{r}
-regmultiAIC <- stepAIC(regmulti4)
-summary(regmultiAIC)
-AIC(regmultiAIC)
+#Secondo modello senza 37, 28 e 11
+regmultiAIC <- stepAIC(lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza372811)) 
+summary(regmultiAIC) 
+AIC(regmultiAIC) 
+par(mfrow = c(2, 2)) 
+plot(regmultiAIC, which = c(1,2,4,5)) 
+par(mfrow = c(1, 1))
 ```
 
 Si nota in questi ultimi modelli che ci sono stati dei miglioramenti sostanziali non tanto in termini di $R^2$ , bensì di AIC.
