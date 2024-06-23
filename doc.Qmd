@@ -423,7 +423,7 @@ Guardando però i residui sembra esserci un'altra misurazione anomala, la numero
 
 ```{r}
 #Secondo modello 
-regmulti2 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza3728) 
+regmulti3 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza3728) 
 summary(regmulti2)  
 AIC(regmulti2)  
 par(mfrow = c(2, 2)) 
@@ -437,7 +437,7 @@ Si nota dai residui che ora l'osservazione 11 si discosterebbe dalle altre guard
 
 ```{r}
 #Secondo modello 
-regmulti2 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza372811) 
+regmulti4 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza372811) 
 summary(regmulti2)  
 AIC(regmulti2)
 par(mfrow = c(2, 2)) 
@@ -465,11 +465,11 @@ par(mfrow = c(1, 1))
 Vedendo che l'osservazione 37 si rivela anche qua essere un outlier, si applica dunque la funzione stepAIC al modello *regmulti2* appena formulato, per vedere se in realtà ne è ancora migliorabile la stima
 
 ```{r}
-regmultiAIC <- stepAIC(regmulti2)
-summary(regmultiAIC)
-AIC(regmultiAIC)
+regmultiAIC1 <- stepAIC(regmulti2)
+summary(regmultiAIC1)
+AIC(regmultiAIC1)
 par(mfrow = c(2, 2)) 
-plot(regmultiAIC, which = c(1,2,4,5)) 
+plot(regmultiAIC1, which = c(1,2,4,5)) 
 par(mfrow = c(1, 1))
 
 ```
@@ -490,11 +490,11 @@ Dai grafici della Distanza di Cook dei vari modelli, si evidenzia un altro valor
 
 ```{r}
 #Secondo modello 
-regmulti3 <- lm(mort ~ educ + nonw + poor + prec*log(nox)*log(so2) + educ*poor*nonw + hous*educ  , data = senza3728) 
-summary(regmulti3)  
-AIC(regmulti3)
+regmultiAIC2 <- stepAIC(regmulti3)
+summary(regmultiAIC2)
+AIC(regmultiAIC2)
 par(mfrow = c(2, 2))
-plot(regmulti3, which = c(1,2,4,5))
+plot(regmulti2, which = c(1,2,4,5))
 par(mfrow = c(1, 1))
 ```
 
@@ -503,7 +503,7 @@ Si nota dai residui che ora l'osservazione 11 si discosterebbe dalle altre guard
 ##### Terzo modello senza osservazione 37, 28 e 11
 
 ```{r}
-regmultiAIC <- stepAIC(regmulti2)
+regmultiAIC <- stepAIC(regmulti4)
 summary(regmultiAIC)
 AIC(regmultiAIC)
 ```
