@@ -524,7 +524,7 @@ Si nota in questi ultimi modelli che ci sono stati dei miglioramenti sostanziali
 |            Terzo Modello             |   81.91%   |   578.08   |                                        Buon miglioramento rispetto al modello originale, simile al secondo modello.                                        |
 |        Terzo Modello senza 37        |   80.65%   |   562.33   |                                                 Buona riduzione nell'AIC e leggero calo del R^2^ Adjusted.                                                 |
 |      Terzo Modello senza 37, 28      |   82.88%   |   548.29   |                                       Miglioramento simile al primo e al secondo modello senza le stesse variabili.                                        |
-|  **Terzo Modello senza 37, 28, 11**  | **85.15%** | **525.99** |       Il miglior modello in termini di entrambe le metriche, suggerendo che la rimozione di queste tre variabili produce un modello molto efficace.        |
+|  **Terzo Modello senza 37, 28, 11**  | **85.15%** | **525.99** |                         Il miglior modello: suggerendo che la rimozione di queste tre variabili produce un modello molto efficace.                         |
 
 ### Conclusione
 
